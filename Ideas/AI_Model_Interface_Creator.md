@@ -8,13 +8,13 @@ This idea is about creating a tool that will allow to create an AI model for eac
 
 ## **Roadmap**
 
-| **Phase** | **Description** | **Duration** | **Cost** |
-| --- | --- | --- | --- |
-| **Phase 1** | **Research** | 1 month | 0 |
-| **Phase 2** | **Design** | 1 month | 0 |
-| **Phase 3** | **Implementation** | 2 months | 0 |
-| **Phase 4** | **Testing** | 1 month | 0 |
-| **Phase 5** | **Deployment** | 1 month | 0 |
+| **Phase** | **Description** | 
+| :---: | --- | 
+| **Phase 1** | [**Research**]() | 
+| **Phase 2** | [**Design**]() | 
+| **Phase 3** | [**Implementation**]() | 
+| **Phase 4** | [**Testing**]() |
+| **Phase 5** | [**Deployment**]() | 
 
 ## **Phase 1: Research**
 
