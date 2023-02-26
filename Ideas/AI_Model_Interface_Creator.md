@@ -6,6 +6,8 @@ Created by: [**Rémy Charles**](https://github.com/RemyCHARLES)
 
 This idea is about creating a tool that will allow to create an AI model for each user who wants an Artificial Intelligence model for his project. This tool will be a web application that will allow the user to create his own AI model. The user will be able to choose the type of model he wants to create, the type of data he wants to use and the type of data they want to predic.
 
+___
+
 ## **Roadmap**
 
 | **Phase** | **Description** | 
@@ -15,6 +17,8 @@ This idea is about creating a tool that will allow to create an AI model for eac
 | **Phase 3** | [**Implementation**]() | 
 | **Phase 4** | [**Testing**]() |
 | **Phase 5** | [**Deployment**]() | 
+
+___
 
 ## **Phase 1: Research**
 
@@ -28,21 +32,23 @@ The solution is to create a tool that will allow the user to create an AI model 
 
 ### **1.3. Research**
 
-#### **1.3.1. Existing solutions**
+* #### **1.3.1. Existing solutions**
 
-There are already some tools that allow to create an AI model. For example, [**Google AutoML**](https://cloud.google.com/automl) allows to create an AI model without having to learn a lot of things. The user will be able to choose the type of model he wants to create, the type of data he wants to use and the type of data they want to predic. The tool will create the AI model for the user. The problem with this tool is that it is not free and it is not open source.
+   There are already some tools that allow to create an AI model. For example, [**Google AutoML**](https://cloud.google.com/automl) allows to create an AI model without having to learn a lot of things. The user will be able to choose the type of model he wants to create, the type of data he wants to use and the type of data they want to predic. The tool will create the AI model for the user. The problem with this tool is that it is not free and it is not open source.
+  
+  <br>
 
-#### **1.3.2. Similar projects**
+* #### **1.3.2. Similar projects**
 
-There are no similar projects.
+   There are no similar projects.
 
-#### **1.3.3. Competitors**
+* #### **1.3.3. Competitors**
 
-There are no competitors.
+    There are no competitors.
 
-#### **1.3.4. Market**
+* #### **1.3.4. Market**
 
-The market is very large because there are a lot of people who want to create an AI model but who do not have the knowledge to do so. This tool will allow them to create an AI model without having to learn a lot of things. 
+    The market is very large because there are a lot of people who want to create an AI model but who do not have the knowledge to do so. This tool will allow them to create an AI model without having to learn a lot of things. 
 
 ### **1.4. Conclusion**
 
