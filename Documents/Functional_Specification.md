@@ -1,6 +1,11 @@
 # Functional Specification Document: The Vet App
+[<img src="https://www.presse-citron.net/app/uploads/2020/06/linkedin-logo.jpg"  width="20px" align=right>](https://www.linkedin.com/in/r%C3%A9my-charles-2a8960232/)
+[<img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" width="20" align="right">](https://github.com/RemyCHARLES)
+| Author | Picture |
+| :--- | :--- |
+| **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
-**Author**: [Rémy Charles](https://github.com/RemyCHARLES) <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> <br>
+
 
 **Date Created**: 2023-04-25 <br>
 **Date Last Modified**: 2023-04-25
@@ -130,6 +135,16 @@ The Vet App will be a mobile application that will be compatible with iOS and An
     The app will use MongoDB as the database for storing user data. MongoDB is a NoSQL database that is known for its flexibility and scalability, making it a great choice for storing and managing large amounts of data.
 
     <br>
+
+- **AI:** 
+  - **TensorFlow** <br>
+    The app will use TensorFlow, which is an open-source machine learning framework developed by Google. TensorFlow is known for its scalability and performance, making it a great choice for developing AI-powered applications.
+  - **Python** <br>
+    The app will use Python as the programming language for developing the AI component of the app. Python is a popular programming language for machine learning and AI applications, making it a great choice for developing the AI component of the app.
+
+    <br>
+
+
 
 ## Conclusion
 
