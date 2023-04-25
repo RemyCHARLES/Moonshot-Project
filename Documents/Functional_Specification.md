@@ -10,9 +10,8 @@
 **Date Created**: 2023-04-25 <br>
 **Date Last Modified**: 2023-04-25
 
-<br>
-
 ___
+
 <details><summary>Table of Contents</summary>
 
 - [Functional Specification Document: The Vet App](#functional-specification-document-the-vet-app)
