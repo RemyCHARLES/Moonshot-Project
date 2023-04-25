@@ -13,6 +13,23 @@
 <br>
 
 ___
+<details><summary>Table of Contents</summary>
+
+- [Functional Specification Document: The Vet App](#functional-specification-document-the-vet-app)
+  - [Introduction](#introduction)
+    - [**Scope**](#scope)
+    - [**Objectives**](#objectives)
+    - [**Assumptions**](#assumptions)
+  - [**Use Cases**](#use-cases)
+  - [**Functional Requirements**](#functional-requirements)
+  - [**Non-Functional Requirements**](#non-functional-requirements)
+  - [Features and Functionalities](#features-and-functionalities)
+  - [Technical Requirements](#technical-requirements)
+  - [Conclusion](#conclusion)
+
+</details>
+
+___
 
 ## Introduction
 
