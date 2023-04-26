@@ -1,4 +1,4 @@
-# Functional Specification Document: The Vet App
+# **Functional Specification Document: The Vet App**
 [<img src="https://www.presse-citron.net/app/uploads/2020/06/linkedin-logo.jpg"  width="20px" align=right>](https://www.linkedin.com/in/r%C3%A9my-charles-2a8960232/)
 [<img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" width="20" align="right">](https://github.com/RemyCHARLES)
 | Author | Picture |
@@ -14,23 +14,23 @@ ___
 
 <details><summary>Table of Contents</summary>
 
-- [Functional Specification Document: The Vet App](#functional-specification-document-the-vet-app)
-  - [Introduction](#introduction)
+- [**Functional Specification Document: The Vet App**](#functional-specification-document-the-vet-app)
+  - [**Introduction**](#introduction)
     - [**Scope**](#scope)
     - [**Objectives**](#objectives)
     - [**Assumptions**](#assumptions)
   - [**Use Cases**](#use-cases)
   - [**Functional Requirements**](#functional-requirements)
   - [**Non-Functional Requirements**](#non-functional-requirements)
-  - [Features and Functionalities](#features-and-functionalities)
-  - [Technical Requirements](#technical-requirements)
-  - [Conclusion](#conclusion)
+  - [**Features and Functionalities**](#features-and-functionalities)
+  - [**Technical Requirements**](#technical-requirements)
+  - [**Conclusion**](#conclusion)
 
 </details>
 
 ___
 
-## Introduction
+## **Introduction**
 
 The Vet App is a mobile application designed to help pet owners calculate the appropriate amount of pet food to give to their puppies based on various factors such as breed, weight, and sterilization status. The app will use artificial intelligence (AI) to provide personalized nutritional recommendations for each puppy. The primary goal of this app is to help pet owners ensure that their puppies receive the appropriate nutrition they need to thrive.
 
@@ -104,7 +104,7 @@ The Vet App will have the following non-functional requirements:
 
 <br>
 
-## Features and Functionalities
+## **Features and Functionalities**
 
 The Vet App will have the following features and functionalities:
 
@@ -133,7 +133,7 @@ The Vet App will have the following features and functionalities:
 
     <br>
 
-## Technical Requirements
+## **Technical Requirements**
 
 The Vet App will be a mobile application that will be compatible with iOS and Android devices. The app will be developed using the following technologies:
 
@@ -162,6 +162,6 @@ The Vet App will be a mobile application that will be compatible with iOS and An
 
 
 
-## Conclusion
+## **Conclusion**
 
 The Vet App is a mobile application designed to help pet owners ensure that their puppies receive the appropriate nutrition they need to thrive. With personalized nutritional recommendations powered by AI, the app provides an innovative and efficient solution to the challenges of pet nutrition. The app's features, including the food calculator, AI-powered analytics, and reminders, will help pet owners ensure that their puppies receive the best possible care and nutrition. The app's development will require the use of technologies such as React Native, Node.js, and MongoDB.
