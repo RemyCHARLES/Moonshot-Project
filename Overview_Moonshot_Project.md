@@ -19,9 +19,3 @@ This idea is about creating a tool that will allow to create an AI model for eac
 
 <br>
 
-## **3. The NFI (Non-Fungible Item)**
-
-
-How to merge my two passion in one Idea? Create a video game who each item is written to the blockchain by a contract in the same way as the NFT. The player will be able to win, buy or sell item inside the game, this includes that there will be several rarity grades and it will be an open world game with a lot different game inside it, like an other world where the player can race cars, play golf or poker, for example. 
-
-<br>

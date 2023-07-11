@@ -1,4 +1,43 @@
-# Functional Specification and Use Cases for Decentralized Social Media Platform
+# Functional Specification Decentralized Social Media Platform
+[<img src="https://www.presse-citron.net/app/uploads/2020/06/linkedin-logo.jpg"  width="20px" align=right>](https://www.linkedin.com/in/r%C3%A9my-charles-2a8960232/)
+[<img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" width="20" align="right">](https://github.com/RemyCHARLES)
+| Author | Picture |
+| :--- | :--- |
+| **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
+
+## Table of Contents
+
+<details><summary> Click to expand </summary>
+
+- [Functional Specification Decentralized Social Media Platform](#functional-specification-decentralized-social-media-platform)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+  - [2. System Overview](#2-system-overview)
+  - [3. Functional Requirements and Use Cases](#3-functional-requirements-and-use-cases)
+    - [3.1 User Registration and Authentication](#31-user-registration-and-authentication)
+      - [Use Case: User Registration](#use-case-user-registration)
+    - [3.2 User Profile Management](#32-user-profile-management)
+      - [Use Case: Update User Profile](#use-case-update-user-profile)
+    - [3.3 Content Sharing](#33-content-sharing)
+      - [Use Case: Create and Share a Post](#use-case-create-and-share-a-post)
+    - [3.4 Post Interaction](#34-post-interaction)
+      - [Use Case: Interact with a Post](#use-case-interact-with-a-post)
+    - [3.5 Decentralized Transactions](#35-decentralized-transactions)
+      - [Use Case: Tip a Content Creator](#use-case-tip-a-content-creator)
+  - [4. Non-Functional Requirements](#4-non-functional-requirements)
+    - [4.1 Security](#41-security)
+    - [4.2 Privacy](#42-privacy)
+    - [4.3 Scalability](#43-scalability)
+    - [4.4 User Experience](#44-user-experience)
+  - [5. Conclusion](#5-conclusion)
+
+</details>
+
+____
+
+
+App Name: [Undefined] </br>
+Business Plan: [Undefined]
 
 ## 1. Introduction
 
@@ -24,8 +63,7 @@ Users should be able to register for a new account with minimal information. The
 
 ### 3.2 User Profile Management
 
-Users should be able to manage their profiles, which includes changing profile pictures, setting a username, and adding a brief bio. 
-
+Users should be able to manage their profiles, which includes changing profile pictures, setting a username, adding a brief bio, and updating other profile information.
 #### Use Case: Update User Profile
 - Primary Actor: Registered User
 - Basic Flow:
