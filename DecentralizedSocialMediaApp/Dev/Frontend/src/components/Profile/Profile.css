@@ -1,0 +1,25 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .profile-username {
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  
+  .profile-bio {
+    text-align: center;
+    margin-top: 10px;
+  }
+  

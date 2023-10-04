@@ -1,20 +1,34 @@
 use solana_program::{
-    account_info::AccountInfo, entrypoint, entrypoint::ProgramResult, pubkey::Pubkey, 
-    program_error::PrintProgramError, program::invoke
+    account_info::{AccountInfo, next_account_info},
+    entrypoint, 
+    entrypoint::ProgramResult, 
+    msg,
+    program_error::ProgramError, 
+    pubkey::Pubkey, 
+    program::invoke,
+    instruction::InstructionError,
 };
+
+use crate::instruction::SocialMediaInstruction; // Assuming your instructions are named this way
+use crate::processor; // Importing the processor functions
 
 entrypoint!(process_instruction);
 
+/// Entry point for the program
+/// This function decodes the instruction_data and dispatches to the appropriate processing function
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
     instruction_data: &[u8],
 ) -> ProgramResult {
-    // Dispatch based on the instruction received
-    match instruction::Instruction::unpack(instruction_data)? {
-        instruction::Instruction::ActionOne { /* parameters */ } => {
-            // Handle this action
+    let instruction = SocialMediaInstruction::unpack(instruction_data)?;
+
+    match instruction {
+        SocialMediaInstruction::Post { content } => {
+            msg!("Instruction: Post");
+            processor::process_post(accounts, content)
         },
-        // ... other actions
+        // Add other instruction match arms as needed
     }
 }
+
