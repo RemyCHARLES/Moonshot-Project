@@ -1,4 +1,4 @@
-# Functional Specification Decentralized Social Media Platform
+# Functional Specification - Decentralized Social Media Platform
 [<img src="https://www.presse-citron.net/app/uploads/2020/06/linkedin-logo.jpg"  width="20px" align=right>](https://www.linkedin.com/in/r%C3%A9my-charles-2a8960232/)
 [<img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" width="20" align="right">](https://github.com/RemyCHARLES)
 | Author | Picture |
@@ -9,7 +9,7 @@
 
 <details><summary> Click to expand </summary>
 
-- [Functional Specification Decentralized Social Media Platform](#functional-specification-decentralized-social-media-platform)
+- [Functional Specification - Decentralized Social Media Platform](#functional-specification---decentralized-social-media-platform)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. System Overview](#2-system-overview)
@@ -30,103 +30,112 @@
     - [4.3 Scalability](#43-scalability)
     - [4.4 User Experience](#44-user-experience)
   - [5. Conclusion](#5-conclusion)
+  - [6. Appendices](#6-appendices)
 
 </details>
 
-____
 
+<br>
 
-App Name: [Undefined] </br>
+App Name: **JOYSO** </br>
 Business Plan: [Undefined]
 
 ## 1. Introduction
 
-This document provides detailed functional specifications and use cases for the development of a decentralized social media platform. It outlines the system's key features, expected behavior, and user interactions.
+JOYSO represents a paradigm shift in the social media world. At a time when concerns about data privacy and personal agency on centralized platforms are paramount, JOYSO emerges as a beacon of hope, promising users unparalleled control over their personal data and interactions. This document endeavors to provide a comprehensive and detailed outline of the functionalities and behaviors one can expect from JOYSO.
 
 ## 2. System Overview
 
-The platform aims to leverage blockchain technology to enhance user privacy and data ownership in the social media landscape. Key functionalities include user registration, profile management, content sharing, post interaction, and decentralized transactions.
+Rooted in the principles of data privacy and user-centric design, JOYSO is crafted atop the Ethereum blockchain, an environment renowned for its robust smart contract functionalities. By melding the power of blockchain with the interactive nature of social media, JOYSO pledges to set a new gold standard in user privacy and data ownership. The platform is meticulously engineered to offer features like user registration, intricate profile management, diverse content sharing capabilities, interactive post functionalities, and seamless decentralized transactions.
 
 ## 3. Functional Requirements and Use Cases
 
 ### 3.1 User Registration and Authentication
 
-Users should be able to register for a new account with minimal information. The registration process will generate a unique blockchain-based identifier for each user.
+JOYSO accentuates the importance of security by integrating multi-factor and biometric authentication methods, ensuring that only the genuine user can access their account.
 
 #### Use Case: User Registration
 - Primary Actor: New User
 - Basic Flow:
-  1. User selects "Sign Up" on the landing page.
-  2. User provides necessary details for registration.
-  3. A unique blockchain-based identifier is generated for the user.
-  4. User is now registered and can log in using this identifier.
+  1. A new user is greeted with a "Sign Up" option on the homepage.
+  2. Upon selection, they're prompted to input their essential registration details.
+  3. The system then crafts a unique blockchain-based identifier tailored for the user.
+  4. With the identifier generated, the user is ushered into the JOYSO community, free to log in using their unique credentials.
 
 ### 3.2 User Profile Management
 
-Users should be able to manage their profiles, which includes changing profile pictures, setting a username, adding a brief bio, and updating other profile information.
+Every user's profile is a mosaic of their identity on JOYSO. They're given ample tools and settings to craft, curate, and modify this digital identity.
+
 #### Use Case: Update User Profile
 - Primary Actor: Registered User
 - Basic Flow:
-  1. User logs in to the platform.
-  2. User navigates to the "Profile" section.
-  3. User updates their profile information and saves changes.
-  4. Updated information is stored in a decentralized manner.
+  1. After securely logging in, the user can navigate to their profile domain.
+  2. Here, a suite of options is available for them to adjust, be it their profile picture, display name, bio, or other personal snippets.
+  3. Once satisfied, they can confirm the changes.
+  4. JOYSO ensures these changes are decentralized, ensuring user data integrity and privacy.
 
 ### 3.3 Content Sharing
 
-Users should be able to create, edit, and delete posts. Posts can be text, images, videos, or links. 
+JOYSO is a canvas for users to express, share, and discuss. With in-built moderation tools, the platform maintains a healthy balance between freedom of expression and community guidelines.
 
 #### Use Case: Create and Share a Post
 - Primary Actor: Registered User
 - Basic Flow:
-  1. User logs in to the platform.
-  2. User selects the option to "Create a Post".
-  3. User inputs the content of the post (text, image, video, or link) and selects "Post".
-  4. The post is stored using a decentralized storage system like IPFS or Filecoin, and it's displayed on the platform.
+  1. Logged in users have the privilege to craft posts.
+  2. Depending on their mood, they can share text, images, videos, or intriguing links.
+  3. Once they've laid out their content, the "Post" option will immortalize their share on JOYSO.
+  4. Leveraging decentralized storage systems, like IPFS, the content remains both accessible and secure.
 
 ### 3.4 Post Interaction
 
-Users should be able to interact with posts. This includes liking, commenting, and sharing posts. 
+Beyond just sharing, JOYSO is a hub for interaction. Users can engage with content that resonates with them, ensuring a dynamic and active community.
 
 #### Use Case: Interact with a Post
 - Primary Actor: Registered User
 - Basic Flow:
-  1. User logs in to the platform.
-  2. User browses through the posts.
-  3. User selects a post and performs an action (like, comment, share).
-  4. The action is recorded on the blockchain.
+  1. Browsing through the tapestry of posts, users can dive into content that piques their interest.
+  2. Every post on JOYSO is equipped with a suite of interaction tools. Whether it's a simple "like", a thoughtful comment, or sharing a post to their own profile, users have multiple avenues to engage.
+  2. Each interaction is not just a digital gesture; it's a transaction on the blockchain, ensuring its permanence and authenticity.
+  3. The platform also offers a reporting mechanism, where users can flag content they deem inappropriate, ensuring a self-regulating community.
 
 ### 3.5 Decentralized Transactions
 
-The platform should support decentralized transactions. For example, users should be able to tip content creators using cryptocurrency.
+At its core, JOYSO is more than just a social platform. It embodies the principles of decentralization by enabling peer-to-peer transactions, thus blurring the lines between social interaction and decentralized finance.
 
 #### Use Case: Tip a Content Creator
 - Primary Actor: Registered User
 - Basic Flow:
-  1. User logs in to the platform.
-  2. User selects a post by a content creator they want to tip.
-  3. User selects the "Tip" option and chooses the amount to tip.
-  4. A smart contract executes the transaction, transferring the cryptocurrency from the user to the content creator.
+  1. If a user stumbles upon content that they particularly appreciate, they can show their gratitude by sending a tip to the content creator.
+  2. This is achieved by selecting the "Tip" option associated with the post.
+  3. The user can choose the amount they wish to tip and confirm the transaction.
+  4. Leveraging the power of Ethereum's smart contracts, the tip is directly transferred to the content creator's account, bypassing any middlemen.
 
 ## 4. Non-Functional Requirements
 
 ### 4.1 Security
 
-The platform should use robust encryption methods to ensure the security of user data. Transactions should be secure and free from vulnerabilities.
+Every piece of data on JOYSO is treated as a precious entity. To ensure its sanctity, the platform employs RSA encryption, a gold standard in data security. All transactions, be it social interactions or monetary transfers, are conducted securely using established blockchain protocols.
 
 ### 4.2 Privacy
 
-The platform should protect user privacy by giving users control over their data. User data should not be accessible to third parties without explicit user consent.
+In a world rife with data breaches and invasive advertising, JOYSO stands apart by championing user privacy. The platform is rigorously designed to be compliant with GDPR and various other international standards. Every piece of user data remains an enigma, accessible only if explicit consent is provided by the user.
 
 ### 4.3 Scalability
 
-The platform should be designed to handle a large number of users and transactions without performance degradation. It should be capable of scaling as user numbers grow.
+JOYSO is not just built for the present but also for the future. Its infrastructure is meticulously designed to accommodate an influx of users and transactions, ensuring the platform remains fluid and responsive, irrespective of its user base size.
 
 ### 4.4 User Experience
 
-The platform should offer an intuitive and smooth user experience. The user interface should be simple yet attractive, with easy navigation.
+The soul of JOYSO lies in its user-centric design. Every pixel, every feature is curated to ensure a seamless, intuitive, and enriching user experience. Navigation is fluid, interfaces are crisp, and interactions are fulfilling, ensuring users find both comfort and joy in using the platform.
 
 ## 5. Conclusion
 
-This document provides a high-level functional specification and use cases for the development of a decentralized social media platform. The platform's key functions include user registration and authentication, user profile management, content sharing, post interaction, and decentralized transactions. With user privacy and data ownership at the forefront of this project, this platform aims to revolutionize the current social media landscape.
+JOYSO isn't just another social media platform; it's a vision for the future. A future where users are in command, where interactions are genuine, and where data is sacrosanct. Through this document, we've endeavored to provide a glimpse into the myriad functionalities and principles that underpin JOYSO. As development progresses, further updates and timelines will be shared with our esteemed community.
+
+## 6. Appendices
+
+- **Glossary**: A compendium of blockchain and platform-specific terms explained for the layman.
+- **References**: A collection of research papers, insightful articles, and diverse resources that have shaped and influenced the ideation and development of JOYSO.
+
+**Feedback**: We cherish community insights. For any comments, queries, or suggestions, kindly [reach out to us](mailto:remy.charles@algosup.com).
 
