@@ -1,21 +1,39 @@
-# Overview of the Moonshot Project
+# **JOYSO: Decentralized Social Media Platform - Detailed Project Overview**
 
-For the moment, I am still looking for my Moonshot Project. But even if I don't have a validated idea yet, I'm still thinking about it and looking for the ideal idea. Since the start of the year I have been search in the world around me and how to make it simpler or make it better.
+[<img src="https://www.presse-citron.net/app/uploads/2020/06/linkedin-logo.jpg"  width="20px" align=right>](https://www.linkedin.com/in/r%C3%A9my-charles-2a8960232/)
+[<img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" width="20" align="right">](https://github.com/RemyCHARLES)
+| Author | Picture |
+| :--- | :--- |
+| **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
-<br>
+## **Introduction**
 
-## **1. The Vet App**
+JOYSO represents a pioneering venture into the realm of decentralized social media platforms. Built upon the core principles of blockchain technology, it promises enhanced user security, autonomy, and transparency in a digital age marred by data breaches and concerns over personal information misuse.
 
+## **In-depth Analysis of Work Done**
 
-My father is a veterinarian in the petfood industry and he has a lot of work. as a majority shareholder of his company and after a long conversation with him I realised that we could create a hundred tools that could help him and avoid a lot of parasitic work such as answering clients who ask him how much food they should give to their puppy because it is a very complex calculation that the customers cannot guess alone. So I thought about creating an app that would allow the customer to enter the weight of his puppy and the age of his puppy and the app would calculate the amount of food he should give to his puppy.
+### **1. Functional Specification**
 
+A meticulously crafted functional specification delineates the platform's cornerstone features:
 
-<br>
+- **User Registration and Authentication:** A process streamlined for user convenience, yet ensuring utmost security with blockchain-backed unique identifiers for every user.
+  
+- **User Profile Management:** User autonomy is paramount. They possess uninhibited control over their profile data. Every alteration, regardless of its magnitude, gets securely stored in a decentralized architecture, ensuring data permanence and tamper-proofing.
+  
+- **Content Sharing:** The platform champions diverse content, from succinct texts to vivid images and engaging videos. The utility to create, refine, and erase posts empowers users, ensuring they're in charge of their narratives.
+  
+- **Post Interaction:** Interaction is the bedrock of social platforms. JOYSO is no different. With capabilities like commenting, sharing, and liking posts, it ensures users remain engaged and content remains vibrant.
+  
+- **Decentralized Transactions:** Beyond mere interaction, JOYSO integrates financial appreciation. Users can reward compelling content creators with cryptocurrency, facilitating a decentralized financial exchange that's swift and transparent.
 
-## **2. The AI Model Interface Creator**
+### **2. Strategic Planning Documents**
 
+- **Objective Document:** This pivotal document encapsulates JOYSO's ethos. It is a testament to the platform's dedication to rewriting the rules of social media, emphasizing user data sanctity, and harnessing blockchain's untapped potential.
+  
+- **Audience Persona Document:** By demystifying the prospective user base, this document holds the key to user-centric development. It sketches detailed user profiles, not just superficial demographics but delving into their digital habits, preferences, pain points, and aspirations. It provides invaluable insights into why and how JOYSO can resonate with them.
+  
+- **Competitive Analysis Report:** A comprehensive deep-dive into the decentralized social media landscape. By scrutinizing potential rivals, their strengths and vulnerabilities, JOYSO can carve out a distinctive niche for itself, offering unparalleled features and experiences.
 
-This idea is about creating a tool that will allow to create an AI model for each user who wants an Artificial Intelligence model for his project. This tool will be a web application that will allow the user to create his own AI model. The user will be able to choose the type of model he wants to create, the type of data he wants to use and the type of data they want to predic.
+## **Looking Forward**
 
-<br>
-
+With this extensive groundwork, JOYSO is not merely an idea but a vision taking shape. Each strategic document and functional delineation marks a step towards realizing a platform that could redefine social media dynamics in the era of decentralization.

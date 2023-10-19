@@ -137,5 +137,7 @@ JOYSO isn't just another social media platform; it's a vision for the future. A 
 - **Glossary**: A compendium of blockchain and platform-specific terms explained for the layman.
 - **References**: A collection of research papers, insightful articles, and diverse resources that have shaped and influenced the ideation and development of JOYSO.
 
+___
+
 **Feedback**: We cherish community insights. For any comments, queries, or suggestions, kindly [reach out to us](mailto:remy.charles@algosup.com).
 
