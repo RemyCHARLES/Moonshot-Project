@@ -6,7 +6,7 @@
 | :--- | :--- |
 | **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
-## What is it ?
+## What is it ? 
 
 A Moonshot project is a visionary endeavor inspired by personal passion, aiming for groundbreaking technological advancements. Leveraging software and innovation, it pushes boundaries to create revolutionary products or services, showcasing one's expertise and ambition.
 

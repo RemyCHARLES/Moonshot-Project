@@ -1,8 +1,5 @@
 # Development Plan for Social Media Platform on Blockchain
 
-Author: [Rémy CHARLES]()
-
-
 ### 1. **Planification and Design** 
 
 - Define the objective of the app.
