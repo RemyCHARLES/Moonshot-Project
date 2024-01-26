@@ -5,139 +5,206 @@
 | :--- | :--- |
 | **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
+
 ## Table of Contents
 
-<details><summary> Click to expand </summary>
+<details>
+
+<summary>Table of Contents</summary>
 
 - [Functional Specification - Decentralized Social Media Platform](#functional-specification---decentralized-social-media-platform)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
-  - [2. System Overview](#2-system-overview)
-  - [3. Functional Requirements and Use Cases](#3-functional-requirements-and-use-cases)
-    - [3.1 User Registration and Authentication](#31-user-registration-and-authentication)
-      - [Use Case: User Registration](#use-case-user-registration)
-    - [3.2 User Profile Management](#32-user-profile-management)
-      - [Use Case: Update User Profile](#use-case-update-user-profile)
-    - [3.3 Content Sharing](#33-content-sharing)
-      - [Use Case: Create and Share a Post](#use-case-create-and-share-a-post)
-    - [3.4 Post Interaction](#34-post-interaction)
-      - [Use Case: Interact with a Post](#use-case-interact-with-a-post)
-    - [3.5 Decentralized Transactions](#35-decentralized-transactions)
-      - [Use Case: Tip a Content Creator](#use-case-tip-a-content-creator)
-  - [4. Non-Functional Requirements](#4-non-functional-requirements)
-    - [4.1 Security](#41-security)
-    - [4.2 Privacy](#42-privacy)
-    - [4.3 Scalability](#43-scalability)
-    - [4.4 User Experience](#44-user-experience)
-  - [5. Conclusion](#5-conclusion)
-  - [6. Appendices](#6-appendices)
+  - [1.1 Purpose](#11-purpose)
+    - [1.2 Scope](#12-scope)
+    - [1.3 Definitions, Acronyms, and Abbreviations](#13-definitions-acronyms-and-abbreviations)
+    - [1.4 References](#14-references)
+    - [1.5 Overview](#15-overview)
+  - [2. Overall Description](#2-overall-description)
+    - [2.1 Product Perspective](#21-product-perspective)
+    - [2.2 Product Functions](#22-product-functions)
+    - [2.3 User Characteristics](#23-user-characteristics)
+    - [2.4 Constraints](#24-constraints)
+    - [2.5 Assumptions and Dependencies](#25-assumptions-and-dependencies)
+  - [3. System Features and Requirements](#3-system-features-and-requirements)
+    - [3.1 User Accounts](#31-user-accounts)
+      - [3.1.1 Registration](#311-registration)
+      - [3.1.2 Profile Management](#312-profile-management)
+    - [3.2 Content Management](#32-content-management)
+      - [3.2.1 Posting Content](#321-posting-content)
+      - [3.2.2 Content Moderation](#322-content-moderation)
+    - [3.3 Cryptocurrency Integration](#33-cryptocurrency-integration)
+      - [3.3.1 Wallet Integration](#331-wallet-integration)
+      - [3.3.2 Token Transactions](#332-token-transactions)
+    - [3.4 Social Interactions](#34-social-interactions)
+      - [3.4.1 Commenting](#341-commenting)
+      - [3.4.2 Liking and Sharing](#342-liking-and-sharing)
+    - [3.5 Search Functionality](#35-search-functionality)
+    - [3.6 Notifications](#36-notifications)
+    - [3.7 Reporting and Analytics](#37-reporting-and-analytics)
+  - [4. Blockchain and Smart Contract Specifications](#4-blockchain-and-smart-contract-specifications)
+    - [4.1 Blockchain Selection](#41-blockchain-selection)
+    - [4.2 Smart Contract Functions](#42-smart-contract-functions)
+    - [4.3 Security Measures](#43-security-measures)
+    - [4.4 Governance Mechanisms](#44-governance-mechanisms)
+  - [5. User Interface Design](#5-user-interface-design)
+    - [5.1 Layout and Navigation](#51-layout-and-navigation)
+    - [5.2 Accessibility Considerations](#52-accessibility-considerations)
+    - [5.3 Design Mockups](#53-design-mockups)
+  - [6. Security Specifications](#6-security-specifications)
+    - [6.1 User Data Protection](#61-user-data-protection)
+    - [6.2 Transaction Security](#62-transaction-security)
+    - [6.3 Platform Security Measures](#63-platform-security-measures)
+  - [7. Performance Requirements](#7-performance-requirements)
+    - [7.1 Load Handling](#71-load-handling)
+    - [7.2 Response Times](#72-response-times)
+    - [7.3 Scalability](#73-scalability)
+  - [8. Quality Attributes](#8-quality-attributes)
+    - [8.1 Usability](#81-usability)
+    - [8.2 Reliability](#82-reliability)
+    - [8.3 Maintainability](#83-maintainability)
+    - [8.4 Portability](#84-portability)
+  - [9. External Interface Requirements](#9-external-interface-requirements)
+    - [9.1 User Interfaces](#91-user-interfaces)
+    - [9.2 Hardware Interfaces](#92-hardware-interfaces)
+    - [9.3 Software Interfaces](#93-software-interfaces)
+    - [9.4 Communication Interfaces](#94-communication-interfaces)
+  - [10. Compliance and Regulatory Requirements](#10-compliance-and-regulatory-requirements)
+  - [11. Appendices](#11-appendices)
+    - [11.1 Supplementary Information](#111-supplementary-information)
+    - [11.2 Glossary](#112-glossary)
+  - [12. Index](#12-index)
+  
 
 </details>
 
-
-<br>
-
-App Name: **JOYSO** </br>
-Business Plan: [Undefined]
-
 ## 1. Introduction
 
-JOYSO represents a paradigm shift in the social media world. At a time when concerns about data privacy and personal agency on centralized platforms are paramount, JOYSO emerges as a beacon of hope, promising users unparalleled control over their personal data and interactions. This document endeavors to provide a comprehensive and detailed outline of the functionalities and behaviors one can expect from JOYSO.
+## 1.1 Purpose
+The purpose of this document is to provide a detailed functional specification for the development of a blockchain-based social media platform. This platform aims to leverage blockchain technology to offer enhanced privacy, user empowerment, and innovative engagement methods through the use of a proprietary cryptocurrency. The document outlines the system's overall functionality, specific requirements, and user interactions.
 
-## 2. System Overview
+### 1.2 Scope
+This specification covers the design and development aspects of the social media platform, including user account management, content posting and interaction, cryptocurrency integration, blockchain functionality, security, and performance requirements. It will serve as a guiding framework for developers, designers, and stakeholders involved in the project.
 
-Rooted in the principles of data privacy and user-centric design, JOYSO is crafted atop the Ethereum blockchain, an environment renowned for its robust smart contract functionalities. By melding the power of blockchain with the interactive nature of social media, JOYSO pledges to set a new gold standard in user privacy and data ownership. The platform is meticulously engineered to offer features like user registration, intricate profile management, diverse content sharing capabilities, interactive post functionalities, and seamless decentralized transactions.
+### 1.3 Definitions, Acronyms, and Abbreviations
+- Blockchain: A decentralized digital ledger that records transactions across multiple computers.
+- Cryptocurrency: A digital or virtual currency secured by cryptography, operating independently of a central bank.
+- Smart Contract: Self-executing contracts with the terms of the agreement directly written into code.
+- MVP (Minimum Viable Product): The most basic version of a product that can be released.
 
-## 3. Functional Requirements and Use Cases
+### 1.4 References
+- [Blockchain Technology Overview](https://www.blockchain.com/)
+- [Introduction to Cryptocurrency](https://www.coinbase.com/learn/crypto-basics/what-is-cryptocurrency)
 
-### 3.1 User Registration and Authentication
+### 1.5 Overview
+The document is structured to first provide an overall description of the platform, followed by detailed specifications of system features and requirements. Subsequent sections cover blockchain and smart contract specifics, user interface design, security specifications, performance requirements, quality attributes, and compliance standards. The document concludes with appendices and an index for easy navigation.
 
-JOYSO accentuates the importance of security by integrating multi-factor and biometric authentication methods, ensuring that only the genuine user can access their account.
 
-#### Use Case: User Registration
-- Primary Actor: New User
-- Basic Flow:
-  1. A new user is greeted with a "Sign Up" option on the homepage.
-  2. Upon selection, they're prompted to input their essential registration details.
-  3. The system then crafts a unique blockchain-based identifier tailored for the user.
-  4. With the identifier generated, the user is ushered into the JOYSO community, free to log in using their unique credentials.
+## 2. Overall Description
 
-### 3.2 User Profile Management
+### 2.1 Product Perspective
 
-Every user's profile is a mosaic of their identity on JOYSO. They're given ample tools and settings to craft, curate, and modify this digital identity.
+### 2.2 Product Functions
 
-#### Use Case: Update User Profile
-- Primary Actor: Registered User
-- Basic Flow:
-  1. After securely logging in, the user can navigate to their profile domain.
-  2. Here, a suite of options is available for them to adjust, be it their profile picture, display name, bio, or other personal snippets.
-  3. Once satisfied, they can confirm the changes.
-  4. JOYSO ensures these changes are decentralized, ensuring user data integrity and privacy.
+### 2.3 User Characteristics
 
-### 3.3 Content Sharing
+### 2.4 Constraints
 
-JOYSO is a canvas for users to express, share, and discuss. With in-built moderation tools, the platform maintains a healthy balance between freedom of expression and community guidelines.
+### 2.5 Assumptions and Dependencies
 
-#### Use Case: Create and Share a Post
-- Primary Actor: Registered User
-- Basic Flow:
-  1. Logged in users have the privilege to craft posts.
-  2. Depending on their mood, they can share text, images, videos, or intriguing links.
-  3. Once they've laid out their content, the "Post" option will immortalize their share on JOYSO.
-  4. Leveraging decentralized storage systems, like IPFS, the content remains both accessible and secure.
+## 3. System Features and Requirements
 
-### 3.4 Post Interaction
+### 3.1 User Accounts
 
-Beyond just sharing, JOYSO is a hub for interaction. Users can engage with content that resonates with them, ensuring a dynamic and active community.
+#### 3.1.1 Registration
 
-#### Use Case: Interact with a Post
-- Primary Actor: Registered User
-- Basic Flow:
-  1. Browsing through the tapestry of posts, users can dive into content that piques their interest.
-  2. Every post on JOYSO is equipped with a suite of interaction tools. Whether it's a simple "like", a thoughtful comment, or sharing a post to their own profile, users have multiple avenues to engage.
-  2. Each interaction is not just a digital gesture; it's a transaction on the blockchain, ensuring its permanence and authenticity.
-  3. The platform also offers a reporting mechanism, where users can flag content they deem inappropriate, ensuring a self-regulating community.
+#### 3.1.2 Profile Management
 
-### 3.5 Decentralized Transactions
+### 3.2 Content Management
 
-At its core, JOYSO is more than just a social platform. It embodies the principles of decentralization by enabling peer-to-peer transactions, thus blurring the lines between social interaction and decentralized finance.
+#### 3.2.1 Posting Content
 
-#### Use Case: Tip a Content Creator
-- Primary Actor: Registered User
-- Basic Flow:
-  1. If a user stumbles upon content that they particularly appreciate, they can show their gratitude by sending a tip to the content creator.
-  2. This is achieved by selecting the "Tip" option associated with the post.
-  3. The user can choose the amount they wish to tip and confirm the transaction.
-  4. Leveraging the power of Ethereum's smart contracts, the tip is directly transferred to the content creator's account, bypassing any middlemen.
+#### 3.2.2 Content Moderation
 
-## 4. Non-Functional Requirements
+### 3.3 Cryptocurrency Integration
 
-### 4.1 Security
+#### 3.3.1 Wallet Integration
 
-Every piece of data on JOYSO is treated as a precious entity. To ensure its sanctity, the platform employs RSA encryption, a gold standard in data security. All transactions, be it social interactions or monetary transfers, are conducted securely using established blockchain protocols.
+#### 3.3.2 Token Transactions
 
-### 4.2 Privacy
+### 3.4 Social Interactions
 
-In a world rife with data breaches and invasive advertising, JOYSO stands apart by championing user privacy. The platform is rigorously designed to be compliant with GDPR and various other international standards. Every piece of user data remains an enigma, accessible only if explicit consent is provided by the user.
+#### 3.4.1 Commenting
 
-### 4.3 Scalability
+#### 3.4.2 Liking and Sharing
 
-JOYSO is not just built for the present but also for the future. Its infrastructure is meticulously designed to accommodate an influx of users and transactions, ensuring the platform remains fluid and responsive, irrespective of its user base size.
+### 3.5 Search Functionality
 
-### 4.4 User Experience
+### 3.6 Notifications
 
-The soul of JOYSO lies in its user-centric design. Every pixel, every feature is curated to ensure a seamless, intuitive, and enriching user experience. Navigation is fluid, interfaces are crisp, and interactions are fulfilling, ensuring users find both comfort and joy in using the platform.
+### 3.7 Reporting and Analytics
 
-## 5. Conclusion
+## 4. Blockchain and Smart Contract Specifications
 
-JOYSO isn't just another social media platform; it's a vision for the future. A future where users are in command, where interactions are genuine, and where data is sacrosanct. Through this document, we've endeavored to provide a glimpse into the myriad functionalities and principles that underpin JOYSO. As development progresses, further updates and timelines will be shared with our esteemed community.
+### 4.1 Blockchain Selection
 
-## 6. Appendices
+### 4.2 Smart Contract Functions
 
-- **Glossary**: A compendium of blockchain and platform-specific terms explained for the layman.
-- **References**: A collection of research papers, insightful articles, and diverse resources that have shaped and influenced the ideation and development of JOYSO.
+### 4.3 Security Measures
 
-___
+### 4.4 Governance Mechanisms
 
-**Feedback**: We cherish community insights. For any comments, queries, or suggestions, kindly [reach out to us](mailto:remy.charles@algosup.com).
+## 5. User Interface Design
+
+### 5.1 Layout and Navigation
+
+### 5.2 Accessibility Considerations
+
+### 5.3 Design Mockups
+
+## 6. Security Specifications
+
+### 6.1 User Data Protection
+
+### 6.2 Transaction Security
+
+### 6.3 Platform Security Measures
+
+## 7. Performance Requirements
+
+### 7.1 Load Handling
+
+### 7.2 Response Times
+
+### 7.3 Scalability
+
+## 8. Quality Attributes
+
+### 8.1 Usability
+
+### 8.2 Reliability
+
+### 8.3 Maintainability
+
+### 8.4 Portability
+
+## 9. External Interface Requirements
+
+### 9.1 User Interfaces
+
+### 9.2 Hardware Interfaces
+
+### 9.3 Software Interfaces
+
+### 9.4 Communication Interfaces
+
+## 10. Compliance and Regulatory Requirements
+
+## 11. Appendices
+
+### 11.1 Supplementary Information
+
+### 11.2 Glossary
+
+## 12. Index
 
