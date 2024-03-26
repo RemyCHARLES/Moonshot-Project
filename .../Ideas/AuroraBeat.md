@@ -41,3 +41,30 @@ My defined deliverables for this project include:
 - Documentation covering my development process, AI model design, and user guide for interacting with the virtual environment.
 
 Setting clear objectives and a defined scope will help guide my project, making it manageable and allowing for focused efforts on achieving my vision. I'm prepared to be flexible and willing to adjust my scope based on progress and feedback.
+
+--------------------
+
+# Technology Stack
+
+## AI and Music Analysis
+
+- **AI Framework**: TensorFlow for developing and training machine learning models.
+- **Music Analysis Libraries**: LibROSA for extracting audio features like tempo, beat, and spectral information.
+- **Real-Time Processing**: Consider tools like TensorFlow Lite for on-device processing to enable real-time music analysis.
+
+## Virtual Environment
+
+- **Game Engine**: Unreal Engine for creating the 3D virtual environment.
+- **3D Modeling**: Blender for creating custom 3D assets and optimizing them for real-time rendering.
+- **Lighting Effects**: Unreal Engine's lighting and particle systems for dynamic light shows.
+- **User Interaction**: Unreal Engine's Blueprint system for implementing user controls and interactions.
+- **Optimization**: Techniques like level of detail (LOD) management and occlusion culling for performance optimization.
+
+## API 
+
+- **Custom API Development**: For handling user music uploads, communication between the AI module and the virtual environment, and managing user interactions.
+
+## Deployment
+
+- **Platform**: PC/Desktop deployment for the initial prototype.
+- **Future Considerations**: Potential VR integration for immersive experiences.
