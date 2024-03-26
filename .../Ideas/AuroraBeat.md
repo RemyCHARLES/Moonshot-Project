@@ -2,6 +2,12 @@
 
 My project aims to create a realistic virtual environment that simulates an electronic music festival. This environment will feature dynamic, AI-generated light shows that respond in real-time to music. The core innovation of my project lies in the AI's ability to analyze any given music track and choreograph a unique light show that complements the rhythm, mood, and intensity of the music.
 
+# My vision of this innovative project
+
+Imagine stepping into a virtual world where you are transported to the center stage of a massive electronic music festival. The crowd roars with excitement as the DJ drops the first beat, and the music pulses through the air. But what sets this experience apart is the dazzling light show that unfolds before your eyes.
+
+As the music builds, the lights intensify, casting vibrant colors and patterns across the stage and the surrounding environment. Laser beams cut through the air, strobes flash in sync with the beat, and LED screens display mesmerizing visuals that dance to the music's rhythm. The entire spectacle is a symphony of light and sound, a dynamic and immersive experience that captivates your senses.
+
 # Objectives
 
 To ensure clarity and focus, I've divided my objectives into **Primary Objectives** and **Secondary Objectives**.
@@ -68,3 +74,15 @@ Setting clear objectives and a defined scope will help guide my project, making 
 
 - **Platform**: PC/Desktop deployment for the initial prototype.
 - **Future Considerations**: Potential VR integration for immersive experiences.
+
+--------------------
+
+# Future Improvements
+
+While my project's core focus is on creating a virtual music festival experience, there are several avenues for future improvements and expansions:
+
+1. **AI Refinement**: Continuously improve the AI's music analysis capabilities to generate more nuanced and detailed light shows.
+2. **Music Genre Adaptation**: Develop genre-specific light show algorithms to cater to different music styles.
+3. **Collaborative Features**: Enable multiple users to experience the virtual festival together or collaborate on creating light shows.
+4. **Live Event Integration**: Explore possibilities for live streaming real-world music events into the virtual environment.
+5. **Create my own professional engine**(*the dream*): I would like to create my own engine to have more control over the project and to have a better understanding of the engine. And allow other developers to use it.
