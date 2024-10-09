@@ -58,9 +58,7 @@ To develop this project, the following technologies will be employed:
 
 8. **Figma or Adobe XD**: For designing the app's UI and user experience before development.
 
-9. **GitHub**: For version control and collaboration during development.
-
-10. **Google Cloud Platform (GCP)** or **Amazon Web Services (AWS)**: For hosting the back-end infrastructure and scalable server environments to manage high traffic.
+9. **Google Cloud Platform (GCP)** or **Amazon Web Services (AWS)**: For hosting the back-end infrastructure and scalable server environments to manage high traffic.
 
 ## Target Audience
 
