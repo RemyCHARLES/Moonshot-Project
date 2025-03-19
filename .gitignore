@@ -14,10 +14,10 @@ Makefile
 cmake_install.cmake
 
 # Crow & External Libraries
-/external/Crow/build/
-/external/asio/build/
-/external/asio/bin/
-/external/Crow/bin/
+/external/Crow/
+/external/asio/
+/external/asio/
+/external/Crow/
 
 # PostgreSQL Database Files
 *.sql-journal
