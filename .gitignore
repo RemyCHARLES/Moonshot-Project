@@ -1,0 +1,40 @@
+# Compiled object files & executables
+*.o
+*.out
+*.a
+*.so
+*.exe
+*.dll
+
+# Build directory
+/build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Crow & External Libraries
+/external/Crow/build/
+/external/asio/build/
+/external/asio/bin/
+/external/Crow/bin/
+
+# PostgreSQL Database Files
+*.sql-journal
+*.sqlite
+*.pgdata
+*.pid
+/database/db_config.json  # Ignore database config if it contains sensitive data
+
+# Environment Variables & Config Files
+.env
+*.log
+*.tmp
+
+# Editor & OS-generated files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
