@@ -1,3 +1,24 @@
+# ====================================================================================
+# Backend Setup Instructions
+# ====================================================================================
+# 1️⃣ Build the project:
+#    rm -rf build
+#    mkdir build && cd build
+#    cmake ..
+#    make
+#
+# 2️⃣ Run the backend:
+#    ./dj_backend
+#
+# 3️⃣ Install dependencies (if missing):
+#    brew install libpq libpqxx cmake
+#
+# 4️⃣ Troubleshooting:
+#    - Ensure PostgreSQL is installed and running.
+#    - Check that libpq and libpqxx are correctly linked in CMake.
+#    - If encountering missing headers, ensure Homebrew libraries are in the include path.
+#
+# ====================================================================================
 cmake_minimum_required(VERSION 3.10)
 project(DJ_Learning_Backend)
 
