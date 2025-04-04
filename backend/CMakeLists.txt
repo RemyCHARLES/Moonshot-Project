@@ -19,19 +19,27 @@
 #    - If encountering missing headers, ensure Homebrew libraries are in the include path.
 #
 # ====================================================================================
-cmake_minimum_required(VERSION 3.10)
-project(DJ_Learning_Backend)
+cmake_minimum_required(VERSION 3.16)
+project(dj_backend)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Include directories for libpqxx and libpq
-include_directories(/opt/homebrew/Cellar/libpqxx/7.10.0/include)
-include_directories(/opt/homebrew/Cellar/libpq/17.4_1/include)  # Adjust path if needed
+# Crow include
+include_directories(${PROJECT_SOURCE_DIR}/../external/Crow/include)
 
-# Link directories for libpqxx and libpq
-link_directories(/opt/homebrew/Cellar/libpqxx/7.10.0/lib)
-link_directories(/opt/homebrew/Cellar/libpq/17.4_1/lib)
+# Asio include
+include_directories(${PROJECT_SOURCE_DIR}/../external/asio/asio/include)
 
-# Build the executable and link against libpqxx and libpq
-add_executable(dj_backend src/main.cpp src/services/db_service.cpp)
+# libpq and libpqxx includes from Homebrew
+include_directories(/opt/homebrew/opt/libpq/include)
+include_directories(/opt/homebrew/opt/libpqxx/include)
+link_directories(/opt/homebrew/opt/libpq/lib)
+link_directories(/opt/homebrew/opt/libpqxx/lib)
+
+# Your source files
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+
+add_executable(dj_backend ${SOURCES})
+
+# Link pqxx and libpq
 target_link_libraries(dj_backend pqxx pq)
