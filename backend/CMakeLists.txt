@@ -24,11 +24,20 @@ project(dj_backend)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(OPENSSL_ROOT_DIR "/opt/homebrew/opt/openssl@3")
+set(OPENSSL_INCLUDE_DIR "/opt/homebrew/opt/openssl@3/include")
+set(OPENSSL_LIBRARIES "/opt/homebrew/opt/openssl@3/lib")
+
+find_package(OpenSSL REQUIRED)
+
 # Crow include
 include_directories(${PROJECT_SOURCE_DIR}/../external/Crow/include)
 
 # Asio include
 include_directories(${PROJECT_SOURCE_DIR}/../external/asio/asio/include)
+
+# JWT-CPP include
+include_directories(${CMAKE_SOURCE_DIR}/../external/jwt-cpp/include)
 
 # libpq and libpqxx includes from Homebrew
 include_directories(/opt/homebrew/opt/libpq/include)
@@ -42,4 +51,8 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(dj_backend ${SOURCES})
 
 # Link pqxx and libpq
-target_link_libraries(dj_backend pqxx pq)
+target_link_libraries(dj_backend PRIVATE pqxx pq ${OPENSSL_LIBRARIES})
+target_include_directories(dj_backend PRIVATE ${OPENSSL_INCLUDE_DIR})
+
+# Link OpenSSL
+include_directories(${OPENSSL_INCLUDE_DIR})

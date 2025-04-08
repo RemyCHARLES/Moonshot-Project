@@ -2,6 +2,7 @@
 #include "crow.h"
 #include "../services/db_service.h"
 #include <pqxx/zview>
+#include <jwt-cpp/jwt.h>
 
 void add_user_routes(crow::SimpleApp& app) {
     CROW_ROUTE(app, "/register").methods("POST"_method)([](const crow::request& req) {
@@ -59,16 +60,17 @@ void add_user_routes(crow::SimpleApp& app) {
             // Assuming the first row contains the user ID
             int user_id = r[0]["id"].as<int>();
 
-            txn.exec("SET LOCAL app.current_user_id = " + txn.quote(user_id));
-            txn.exec_params(
-                "INSERT INTO sessions (user_id, started_at) VALUES ($1, NOW())",
-                user_id
-            );
+            auto token = jwt::create()
+                .set_issuer("dj-app")
+                .set_type("JWS")
+                .set_payload_claim("user_id", jwt::claim(std::to_string(user_id)))
+                .set_payload_claim("username", jwt::claim(username))
+                .set_expires_at(std::chrono::system_clock::now() + std::chrono::minutes{60})
+                .sign(jwt::algorithm::hs256{"your-secret-key"});
 
-            txn.exec("GRANT USAGE, SELECT ON SEQUENCE sessions_id_seq TO dj_user;");
-
-            txn.commit();
-            return crow::response(200, "Login successful");
+            crow::json::wvalue response;
+            response["token"] = token;
+            return crow::response{response};
         } catch (const std::exception& e) {
             return crow::response(500, std::string("Error: ") + e.what());
         }
@@ -76,19 +78,19 @@ void add_user_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/me/sessions").methods("GET"_method)([](const crow::request& req) {
         try {
-            auto url_params = crow::query_string(req.url_params);
-            if (!url_params.get("user_id")) {
-                return crow::response(400, "Missing user_id");
-            }
+            std::string auth_header = req.get_header_value("Authorization");
+            std::string token = auth_header.substr(strlen("Bearer "));
+            auto decoded_token = jwt::decode(token);
+            int user_id = std::stoi(decoded_token.get_payload_claim("user_id").as_string());
 
             DatabaseService db;
             pqxx::connection conn = db.connect();
             pqxx::work txn(conn);
 
-            int user_id = std::stoi(req.url_params.get("user_id"));
+            txn.exec_params("SELECT set_config('app.current_user_id', $1, false)", std::to_string(user_id));
+
             pqxx::result r = txn.exec_params(
-                "SELECT id, user_id, started_at FROM sessions WHERE user_id = $1 ORDER BY started_at DESC",
-                user_id
+                "SELECT id, user_id, started_at FROM sessions WHERE user_id = current_setting('app.current_user_id')::int ORDER BY started_at DESC"
             );
 
             crow::json::wvalue result;
