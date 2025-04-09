@@ -103,4 +103,19 @@ _(Deadline: June 30, 2026)_
 
 _(Ongoing from July 1, 2026)_
 
+## 🔧 External Libraries
 
+Before building the project, make sure you have the following libraries in the `external/` folder:
+
+- [Crow](https://github.com/CrowCpp/crow)
+- [jwt-cpp](https://github.com/Thalhammer/jwt-cpp)
+- [asio](https://think-async.com/Asio/)
+
+You can clone them manually or use a script like this:
+
+```bash
+mkdir -p external
+cd external
+git clone https://github.com/CrowCpp/crow.git
+git clone https://github.com/Thalhammer/jwt-cpp.git
+git clone https://github.com/chriskohlhoff/asio.git
