@@ -22,6 +22,13 @@ final _router = GoRouter(
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
     ),
+    GoRoute(path: '/home', builder: (context, state) {
+      // This is a placeholder for the home screen
+      return Scaffold(
+        appBar: AppBar(title: const Text('Home')),
+        body: const Center(child: Text('Welcome to the Home Screen!')),
+      );
+    }),
   ],
 );
 

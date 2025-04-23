@@ -36,6 +36,7 @@ dependencies:
   go_router: ^12.1.1
   shared_preferences: ^2.2.0
   jwt_decoder: ^2.0.1
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
