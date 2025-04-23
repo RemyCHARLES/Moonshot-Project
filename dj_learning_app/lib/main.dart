@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'presentation/screens/welcome/welcome_screen.dart';
 import 'presentation/screens/login/login_screen.dart';
 import 'presentation/screens/register/register_screen.dart';
+import 'presentation/screens/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,13 +23,10 @@ final _router = GoRouter(
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
     ),
-    GoRoute(path: '/home', builder: (context, state) {
-      // This is a placeholder for the home screen
-      return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
-        body: const Center(child: Text('Welcome to the Home Screen!')),
-      );
-    }),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const UserDashboardScreen(),
+    ),
   ],
 );
 

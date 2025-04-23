@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _storage = const FlutterSecureStorage();
 
   void _login() async {
     final username = _usernameController.text.trim();
@@ -36,7 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = jsonDecode(response.body);
       final token = data['token'];
 
-      // TODO: store the token securely
+      await _storage.write(key: 'jwt_token', value: token);
+
+      final parts = token.split('.');
+      if (parts.length != 3) return;
+      final payload = jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
+      await _storage.write(key: 'user_id', value: payload['user_id'].toString());
+      await _storage.write(key: 'username', value: payload['username']);
 
       context.go('/home');
     } else {

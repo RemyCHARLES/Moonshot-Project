@@ -9,25 +9,49 @@ void add_user_routes(crow::SimpleApp& app) {
         auto body = crow::json::load(req.body);
         if (!body)
             return crow::response(400, "Invalid JSON");
-    
+
         std::string username = body["username"].s();
         std::string email = body["email"].s();
         std::string password = body["password"].s();
-    
+
         try {
             DatabaseService db;
             pqxx::connection conn = db.connect();
             pqxx::work txn(conn);
-    
-            txn.exec_params(
-                "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
+
+            // Check if user already exists
+            pqxx::result check = txn.exec_params(
+                "SELECT id FROM users WHERE username = $1 OR email = $2",
+                username,
+                email
+            );
+
+            if (!check.empty()) {
+                return crow::response(409, "User already exists");
+            }
+
+            // Insert new user
+            pqxx::result result = txn.exec_params(
+                "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id",
                 username,
                 email,
                 password
             );
-    
+
+            int user_id = result[0]["id"].as<int>();
             txn.commit();
-            return crow::response(201, "User registered");
+
+            auto token = jwt::create()
+                .set_issuer("dj-app")
+                .set_type("JWS")
+                .set_payload_claim("user_id", jwt::claim(std::to_string(user_id)))
+                .set_payload_claim("username", jwt::claim(username))
+                .set_expires_at(std::chrono::system_clock::now() + std::chrono::minutes{60})
+                .sign(jwt::algorithm::hs256{"your-secret-key"});
+
+            crow::json::wvalue response;
+            response["token"] = token;
+            return crow::response(201, response);
         } catch (const std::exception& e) {
             return crow::response(500, std::string("Error: ") + e.what());
         }
