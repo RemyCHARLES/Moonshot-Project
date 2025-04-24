@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:dj_learning_app/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,25 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    final url = Uri.parse('http://localhost:18080/login');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password}),
-    );
+    final userData = await AuthService.loginUser(username, password);
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final token = data['token'];
+    if (userData != null) {
+      await _storage.write(key: 'jwt_token', value: userData['token']);
+      await _storage.write(key: 'user_id', value: userData['user_id'].toString());
+      await _storage.write(key: 'username', value: userData['username']);
 
-      await _storage.write(key: 'jwt_token', value: token);
-
-      final parts = token.split('.');
-      if (parts.length != 3) return;
-      final payload = jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
-      await _storage.write(key: 'user_id', value: payload['user_id'].toString());
-      await _storage.write(key: 'username', value: payload['username']);
-
+      if (!mounted) return;
       context.go('/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
