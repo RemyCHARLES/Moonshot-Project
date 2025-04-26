@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:dj_learning_app/core/constants/colors.dart';
+import 'package:dj_learning_app/core/theme/app_text_styles.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -7,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -15,13 +17,9 @@ class WelcomeScreen extends StatelessWidget {
             const SizedBox(height: 40),
             const Text(
               'BeatQuest',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF9C27B0), // Violet
-              ),
+              style: AppTextStyles.heading,
             ),
-            const SizedBox(), // espace vide pour centrer verticalement
+            const SizedBox(), // empty space to center vertically
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
               child: Column(
@@ -29,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF9C27B0), // Violet
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -40,13 +38,13 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: const Text(
                       'GET STARTED',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: AppTextStyles.buttonText,
                     ),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.grey),
+                      side: const BorderSide(color: AppColors.textSecondary),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -57,10 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: const Text(
                       'I ALREADY HAVE AN ACCOUNT',
-                      style: TextStyle(
-                        color: Color(0xFF03A9F4), // Bleu clair
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: AppTextStyles.linkText,
                     ),
                   ),
                 ],

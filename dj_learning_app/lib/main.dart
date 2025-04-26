@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'presentation/screens/welcome/welcome_screen.dart';
-import 'presentation/screens/login/login_screen.dart';
-import 'presentation/screens/register/register_screen.dart';
-import 'presentation/screens/home/home_screen.dart';
+import 'core/theme/app_theme.dart'; // Theme for the app (colors, fonts, etc.)
+import 'package:flutter/material.dart'; // Flutter framework for building UI
+import 'package:go_router/go_router.dart'; // Package for routing and navigation
+import 'presentation/screens/welcome/welcome_screen.dart'; // Welcome screen of the app
+import 'presentation/screens/login/login_screen.dart'; // Login screen of the app
+import 'presentation/screens/register/register_screen.dart'; // Register screen of the app
+import 'presentation/screens/home/home_screen.dart'; // Home screen of the app
 
+// Entry point of the application
 void main() {
   runApp(const MyApp());
 }
 
+// App routing configuration (navigation between pages)
 final _router = GoRouter(
   routes: [
     GoRoute(
@@ -38,6 +41,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme, // Light theme configuration
+      darkTheme: AppTheme.darkTheme, // Dark theme configuration
+      themeMode: ThemeMode.light, // Force light theme for now
     );
   }
 }
