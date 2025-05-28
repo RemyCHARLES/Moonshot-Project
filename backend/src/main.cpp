@@ -1,6 +1,11 @@
 #include "crow.h"
 #include "services/db_service.h"
+#include "services/lesson_service.h"
 #include "routes/user_routes.h"
+#include "routes/lesson_routes.h"
+#include "routes/progress_routes.h"
+#include "routes/reward_routes.h"
+#include "routes/performance_routes.h"
 
 int main() {
     // Test DB connection
@@ -13,6 +18,11 @@ int main() {
     CROW_ROUTE(app, "/")([] {
         return "🎧 Welcome to the DJ Backend API!";
     });
+
+    char buffer[PATH_MAX];
+    if (getcwd(buffer, sizeof(buffer)) != nullptr) {
+        std::cout << "Répertoire courant : " << buffer << std::endl;
+    }
 
     // DB check route
     CROW_ROUTE(app, "/db-check")([] {
@@ -29,8 +39,12 @@ int main() {
         }
     });
 
-    // Register user routes
+    // Register all route groups
     add_user_routes(app);
+    setupLessonRoutes(app);
+    setupProgressRoutes(app);
+    setupRewardRoutes(app);
+    setupPerformanceRoutes(app);
 
     std::cout << "🚀 Starting API server on port 18080..." << std::endl;
     app.port(18080).multithreaded().run();

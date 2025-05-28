@@ -17,6 +17,7 @@ cmake_install.cmake
 /external/asio/
 /external/Crow/
 /external/jwt-cpp/
+/external/nlohmann/
 
 # PostgreSQL Database Files
 *.sql-journal

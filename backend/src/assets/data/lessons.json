@@ -1,0 +1,65 @@
+[
+    {
+      "id": 1,
+      "title": "Introduction au DJing",
+      "totalPages": 5,
+      "pages": [
+        {
+          "type": "text",
+          "question": "Bienvenue dans votre première leçon de DJing. Dans cette leçon, nous allons explorer les bases du mixage.",
+          "options": null,
+          "correctIndex": null,
+          "explanation": null
+        },
+        {
+          "type": "text",
+          "question": "Un DJ est une personne qui sélectionne, mixe et enchaîne des morceaux de musique pour créer une ambiance unique.",
+          "options": null,
+          "correctIndex": null,
+          "explanation": null
+        },
+        {
+          "type": "mcq",
+          "question": "Quel est l'outil principal utilisé pour mixer deux pistes audio ?",
+          "options": ["Le crossfader", "Le volume", "Le pitch", "L'égaliseur"],
+          "correctIndex": 0,
+          "explanation": "Le crossfader permet de mélanger les deux pistes en douceur en passant de l'une à l'autre."
+        },
+        {
+          "type": "mcq",
+          "question": "Quelle est la fonction principale du bouton 'cue' sur une platine DJ ?",
+          "options": ["Lancer un effet", "Déclencher un sample", "Préécouter une piste", "Changer de BPM"],
+          "correctIndex": 2,
+          "explanation": "Le bouton 'cue' permet au DJ de préécouter une piste dans son casque sans que le public ne l'entende."
+        },
+        {
+          "type": "text",
+          "question": "Félicitations ! Vous venez de terminer la leçon d’introduction. Vous êtes maintenant prêt à découvrir les techniques de base du DJing.",
+          "options": null,
+          "correctIndex": null,
+          "explanation": null
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Techniques de base",
+      "totalPages": 2,
+      "pages": [
+        {
+          "type": "text",
+          "question": "Utilisation du crossfader.",
+          "options": null,
+          "correctIndex": null,
+          "explanation": null
+        },
+        {
+          "type": "text",
+          "question": "Synchronisation des pistes.",
+          "options": null,
+          "correctIndex": null,
+          "explanation": null
+        }
+      ]
+    }
+  ]

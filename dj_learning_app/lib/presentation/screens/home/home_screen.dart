@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/constants/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,143 +9,108 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Row(
-                      children: [
-                        const Icon(Icons.local_fire_department, color: Colors.orange),
-                        const SizedBox(width: 4),
-                        const Text('1'),
-                      ],
-                    ),
-                  ),
-                  Center(
-                    child: Row(
-                      children: [
-                        const Icon(Icons.diamond, color: Colors.blue),
-                        const SizedBox(width: 4),
-                        const Text('500'),
-                      ],
-                    ),
-                  ),
-                  Center(
-                    child: Row(
-                      children: [
-                        const Icon(Icons.favorite, color: Colors.red),
-                        const SizedBox(width: 4),
-                        const Text('5'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                const Icon(Icons.local_fire_department, color: Colors.orange),
+                const SizedBox(width: 4),
+                Text('1', style: TextStyle(color: AppColors.textPrimary)),
+                const SizedBox(width: 16),
+                const Icon(Icons.diamond, color: Colors.blue),
+                const SizedBox(width: 4),
+                Text('500', style: TextStyle(color: AppColors.textPrimary)),
+                const SizedBox(width: 16),
+                const Icon(Icons.favorite, color: Colors.red),
+                const SizedBox(width: 4),
+                Text('5', style: TextStyle(color: AppColors.textPrimary)),
+              ],
             ),
-
-            // Unit Info
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  const Text('Unit 1', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 12),
-                  const Text('Intro to DJing'),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Progression and Start button with custom curved path
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Flexible(
-                    child: ListView.builder(
-                      reverse: true,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6.0),
-                            child: _buildStartNode(),
-                          );
-                        } else {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6.0),
-                            child: _buildLockedNode(),
-                          );
-                        }
-                      },
+            const SizedBox(height: 8),
+            RichText(
+              text: TextSpan(
+                text: 'Unit 1  ',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.textPrimary),
+                children: const [
+                  TextSpan(
+                    text: 'Intro to DJing',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16,
+                      color: AppColors.textSecondary,
                     ),
                   ),
-                  const SizedBox(height: 16),
                 ],
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined, color: Colors.black),
-            activeIcon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 120),
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.grey.shade300,
+                    child: const Icon(Icons.lock, color: Colors.grey),
+                  ),
+                );
+              },
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.headphones_outlined, color: Colors.black),
-            activeIcon: Icon(Icons.headphones, color: Colors.black),
-            label: 'Learn',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard_outlined, color: Colors.black),
-            activeIcon: Icon(Icons.leaderboard, color: Colors.black),
-            label: 'Leaderboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events_outlined, color: Colors.black),
-            activeIcon: Icon(Icons.emoji_events, color: Colors.black),
-            label: 'Achievements',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz, color: Colors.black),
-            activeIcon: Icon(Icons.menu, color: Colors.black),
-            label: 'More',
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: FloatingActionButton(
+              backgroundColor: AppColors.primary,
+              onPressed: () {
+                context.push('/lesson-runner/1');
+              },
+              child: const Icon(Icons.play_arrow),
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLockedNode() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: CircleAvatar(
-        radius: 28,
-        backgroundColor: const Color.fromARGB(255, 223, 223, 223),
-        child: const Icon(Icons.lock, color: Colors.grey),
-      ),
-    );
-  }
-
-  Widget _buildStartNode() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: CircleAvatar(
-        radius: 32,
-        backgroundColor: Colors.purple,
-        child: Icon(Icons.play_arrow, color: Colors.white, size: 32),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColors.background,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.black,
+        currentIndex: 0,
+        onTap: (index) {},
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.headphones),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_events),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.more_horiz),
+            label: '',
+          ),
+        ],
       ),
     );
   }

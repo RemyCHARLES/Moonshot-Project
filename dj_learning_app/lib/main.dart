@@ -5,6 +5,7 @@ import 'presentation/screens/welcome/welcome_screen.dart'; // Welcome screen of 
 import 'presentation/screens/login/login_screen.dart'; // Login screen of the app
 import 'presentation/screens/register/register_screen.dart'; // Register screen of the app
 import 'presentation/screens/home/home_screen.dart'; // Home screen of the app
+import 'presentation/screens/lesson_runner/lesson_runner_sreen.dart'; // Lesson runner screen
 
 // Entry point of the application
 void main() {
@@ -29,6 +30,14 @@ final _router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/lesson-runner/:lessonId',
+      name: 'lesson-runner',
+      builder: (context, state) {
+        final lessonId = state.pathParameters['lessonId'] ?? '';
+        return LessonRunnerScreen(lessonId: lessonId);
+      },
     ),
   ],
 );

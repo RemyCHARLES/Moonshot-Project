@@ -39,6 +39,9 @@ include_directories(${PROJECT_SOURCE_DIR}/../external/asio/asio/include)
 # JWT-CPP include
 include_directories(${CMAKE_SOURCE_DIR}/../external/jwt-cpp/include)
 
+# nlohmann json include
+include_directories(${CMAKE_SOURCE_DIR}/../external/nlohmann/)
+
 # libpq and libpqxx includes from Homebrew
 include_directories(/opt/homebrew/opt/libpq/include)
 include_directories(/opt/homebrew/opt/libpqxx/include)
