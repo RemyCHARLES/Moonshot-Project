@@ -6,10 +6,19 @@
 #include "routes/progress_routes.h"
 #include "routes/reward_routes.h"
 #include "routes/performance_routes.h"
+#include "routes/completion_routes.h"
 
 int main() {
     // Test DB connection
     test_connection();
+
+    // Auto-sync lessons from JSON file
+    try {
+        auto lessons = LessonService::loadLessonsFromFile();
+        LessonService::syncLessonsToDb(lessons);
+    } catch (const std::exception& e) {
+        std::cerr << "❌ Erreur lors de la synchronisation des leçons : " << e.what() << std::endl;
+    }
 
     // Create API app
     crow::SimpleApp app;
@@ -45,6 +54,7 @@ int main() {
     setupProgressRoutes(app);
     setupRewardRoutes(app);
     setupPerformanceRoutes(app);
+    setupCompletionRoutes(app);
 
     std::cout << "🚀 Starting API server on port 18080..." << std::endl;
     app.port(18080).multithreaded().run();

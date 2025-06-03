@@ -70,26 +70,12 @@ void setupLessonRoutes(crow::SimpleApp& app) {
     // Get a specific page of a lesson by lesson ID and page index
     CROW_ROUTE(app, "/lessons/<int>/page/<int>").methods("GET"_method)(
         [](const crow::request& req, int lessonId, int pageIndex){
-            std::vector<LessonModel> lessons;
             try {
-                lessons = LessonService::loadLessonsFromFile();
+                DatabaseService db;
+                return crow::response(200, db.getLessonPage(lessonId, pageIndex));
             } catch (const std::exception& e) {
-                std::cerr << "[ERREUR] Échec du chargement des leçons : " << e.what() << std::endl;
-                return crow::response(500, "Erreur lors du chargement des leçons.");
+                std::cerr << "[ERREUR] Chargement de page depuis la BDD : " << e.what() << std::endl;
+                return crow::response(500, "Erreur serveur");
             }
-
-            auto it = std::find_if(lessons.begin(), lessons.end(), [&](const LessonModel& l) {
-                return l.id == lessonId;
-            });
-
-            if (it == lessons.end() || pageIndex < 0 || pageIndex >= static_cast<int>(it->pages.size())) {
-                return crow::response(404, "Page non trouvée");
-            }
-
-            const auto& fullPage = it->serialized_json["pages"][pageIndex];
-            nlohmann::json pageJson = fullPage;
-            pageJson["lessonTitle"] = it->title;
-            pageJson["totalPages"] = it->pages.size();
-            return crow::response(200, pageJson.dump());
         });
 }

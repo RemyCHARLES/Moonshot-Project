@@ -137,6 +137,47 @@ void DatabaseService::createPerformance(int userId, int sessionId, int lessonId,
     }
 }
 
+// Marquer une leçon comme terminée
+void DatabaseService::markLessonAsCompleted(int userId, int lessonId) {
+    try {
+        pqxx::connection conn = connect(); // 🔧 ajouter cette ligne
+        pqxx::work txn(conn);
+        txn.exec_params(
+            "INSERT INTO user_progress (user_id, lesson_id, completed, updated_at) "
+            "VALUES ($1, $2, true, NOW()) "
+            "ON CONFLICT (user_id, lesson_id) DO UPDATE SET completed = true, updated_at = NOW();",
+            userId, lessonId
+        );
+        txn.commit();
+    } catch (const std::exception& e) {
+        std::cerr << "❌ Error in markLessonAsCompleted: " << e.what() << std::endl;
+    }
+}
+
+std::string DatabaseService::getCompletedLessons(int userId) {
+    try {
+        pqxx::connection conn = connect();
+        pqxx::work txn(conn);
+        pqxx::result r = txn.exec_params(
+            "SELECT lesson_id, updated_at FROM user_progress WHERE user_id = $1 AND completed = true",
+            userId
+        );
+
+        std::string json = "[";
+        for (size_t i = 0; i < r.size(); ++i) {
+            json += "{";
+            json += "\"lesson_id\":" + std::string(r[i][0].c_str()) + ",";
+            json += "\"updated_at\":\"" + std::string(r[i][1].c_str()) + "\"";
+            json += "}";
+            if (i != r.size() - 1) json += ",";
+        }
+        json += "]";
+        return json;
+    } catch (const std::exception& e) {
+        return "{\"error\":\"" + std::string(e.what()) + "\"}";
+    }
+}
+
 // Récupérer les progrès utilisateur
 std::string DatabaseService::getUserProgress(int userId) {
     try {
@@ -201,6 +242,46 @@ std::string DatabaseService::getPerformancesByUserId(int userId) {
         }
         json += "]";
         return json;
+    } catch (const std::exception &e) {
+        return "{\"error\":\"" + std::string(e.what()) + "\"}";
+    }
+}
+
+
+
+
+
+// Récupérer une page de leçon spécifique avec métadonnées
+std::string DatabaseService::getLessonPage(int lessonId, int pageIndex) {
+    try {
+        pqxx::connection conn = connect();
+        pqxx::work txn(conn);
+
+        // Get page by lesson_id and position
+        pqxx::result page = txn.exec_params(
+            "SELECT type, content FROM pages WHERE lesson_id = $1 AND position = $2",
+            lessonId, pageIndex
+        );
+
+        if (page.empty()) return "{}";
+
+        // Get lesson title and total page count
+        pqxx::result meta = txn.exec_params(
+            "SELECT title, (SELECT COUNT(*) FROM pages WHERE lesson_id = $1) FROM lessons WHERE id = $1",
+            lessonId
+        );
+
+        if (meta.empty()) return "{}";
+
+        std::string json = page[0][1].c_str();  // content JSON
+        json.pop_back(); // remove trailing }
+        json += ",\"type\":\"" + std::string(page[0][0].c_str()) + "\"";
+        json += ",\"lessonTitle\":\"" + std::string(meta[0][0].c_str()) + "\"";
+        json += ",\"totalPages\":" + std::string(meta[0][1].c_str());
+        json += "}";
+
+        return json;
+
     } catch (const std::exception &e) {
         return "{\"error\":\"" + std::string(e.what()) + "\"}";
     }

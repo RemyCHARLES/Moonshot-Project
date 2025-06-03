@@ -4,6 +4,8 @@
 #include <iostream> 
 #include "json.hpp"
 #include "../models/lesson_model.h"
+#include "../models/page_model.h"
+#include <pqxx/pqxx>
 
 // Dans lesson_service.cpp
 std::vector<LessonModel> LessonService::loadLessonsFromFile() {
@@ -31,9 +33,11 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
         lesson_json["totalPages"] = totalPages;
         lesson_json["pages"] = nlohmann::json::array();
 
+        int step = 0;
         for (const auto& page : lessonData["pages"]) {
             PageModel p;
-            p.step = 0;
+            p.step = step++;
+            // p.type = page.contains("type") ? page["type"] : "text"; // PageModel doesn't have type
             p.content = page.contains("question") ? page["question"] : page["content"];
             lesson.pages.push_back(p);
 
@@ -51,4 +55,37 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
     }
 
     return lessonList;
+}
+
+void LessonService::syncLessonsToDb(const std::vector<LessonModel>& lessons) {
+    pqxx::connection conn("dbname=dj_app user=postgres");
+    pqxx::work txn(conn);
+
+    for (const auto& lesson : lessons) {
+        txn.exec_params(
+            "INSERT INTO lessons (id, title, position) "
+            "VALUES ($1, $2, $3) "
+            "ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, position = EXCLUDED.position;",
+            lesson.id,
+            lesson.title,
+            lesson.id  // using lesson ID as position for now
+        );
+
+        // Clear existing pages for this lesson
+        txn.exec_params("DELETE FROM pages WHERE lesson_id = $1;", lesson.id);
+
+        for (const auto& page : lesson.pages) {
+            const auto& page_json = lesson.serialized_json["pages"][page.step];
+            txn.exec_params(
+                "INSERT INTO pages (lesson_id, position, content, type) VALUES ($1, $2, $3, $4);",
+                lesson.id,
+                page.step,
+                page_json.dump(),
+                page_json["type"].get<std::string>()
+            );
+        }
+    }
+
+    txn.commit();
+    std::cout << "✅ Leçons et pages synchronisées depuis le fichier JSON.\n";
 }
