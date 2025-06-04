@@ -38,6 +38,9 @@ public:
 
     // Function to get user performances
     std::string getPerformancesByUserId(int userId);
+
+    // Function to get the last unlocked lesson for a user
+    int getLastUnlockedLesson(int userId);
 };
 
 // Function to test the connection

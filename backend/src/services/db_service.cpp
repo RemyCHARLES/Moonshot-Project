@@ -137,17 +137,20 @@ void DatabaseService::createPerformance(int userId, int sessionId, int lessonId,
     }
 }
 
-// Marquer une leçon comme terminée
 void DatabaseService::markLessonAsCompleted(int userId, int lessonId) {
     try {
-        pqxx::connection conn = connect(); // 🔧 ajouter cette ligne
+        pqxx::connection conn = connect();
         pqxx::work txn(conn);
+
         txn.exec_params(
             "INSERT INTO user_progress (user_id, lesson_id, completed, updated_at) "
             "VALUES ($1, $2, true, NOW()) "
             "ON CONFLICT (user_id, lesson_id) DO UPDATE SET completed = true, updated_at = NOW();",
             userId, lessonId
         );
+
+        // Debug log before committing transaction
+        std::cout << "✅ markLessonAsCompleted: lesson_id = " << lessonId << " for user_id = " << userId << std::endl;
         txn.commit();
     } catch (const std::exception& e) {
         std::cerr << "❌ Error in markLessonAsCompleted: " << e.what() << std::endl;
@@ -178,23 +181,34 @@ std::string DatabaseService::getCompletedLessons(int userId) {
     }
 }
 
-// Récupérer les progrès utilisateur
 std::string DatabaseService::getUserProgress(int userId) {
     try {
         pqxx::connection conn = connect();
         pqxx::work txn(conn);
-        pqxx::result r = txn.exec("SELECT lesson_id, completed, updated_at FROM user_progress WHERE user_id = " + std::to_string(userId));
+        pqxx::result r = txn.exec(
+            "SELECT lesson_id FROM user_progress WHERE user_id = " + std::to_string(userId) + " AND completed = true ORDER BY lesson_id"
+        );
 
-        std::string json = "[";
-        for (size_t i = 0; i < r.size(); ++i) {
-            json += "{";
-            json += "\"lesson_id\":" + std::string(r[i][0].c_str()) + ",";
-            json += "\"completed\":" + r[i][1].as<std::string>() + ",";
-            json += "\"updated_at\":\"" + std::string(r[i][2].c_str()) + "\"";
-            json += "}";
-            if (i != r.size() - 1) json += ",";
+        std::vector<int> unlocked;
+        for (const auto& row : r) {
+            unlocked.push_back(row[0].as<int>());
         }
-        json += "]";
+
+        int nextLesson = 1;
+        if (!unlocked.empty()) {
+            nextLesson = unlocked.back() + 1;
+        }
+
+        // Construction manuelle du JSON
+        std::string json = "{";
+        json += "\"nextLesson\":" + std::to_string(nextLesson) + ",";
+        json += "\"unlockedLessons\":[";
+        for (size_t i = 0; i < unlocked.size(); ++i) {
+            json += std::to_string(unlocked[i]);
+            if (i != unlocked.size() - 1) json += ",";
+        }
+        json += "]}";
+
         return json;
     } catch (const std::exception &e) {
         return "{\"error\":\"" + std::string(e.what()) + "\"}";
@@ -285,4 +299,17 @@ std::string DatabaseService::getLessonPage(int lessonId, int pageIndex) {
     } catch (const std::exception &e) {
         return "{\"error\":\"" + std::string(e.what()) + "\"}";
     }
+}
+
+int DatabaseService::getLastUnlockedLesson(int userId) {
+    pqxx::connection conn = connect();
+    pqxx::work txn(conn);
+
+    pqxx::result r = txn.exec_params(
+        "SELECT last_unlocked_lesson FROM users WHERE id = $1",
+        userId
+    );
+
+    if (r.empty()) return 1;
+    return r[0][0].as<int>();
 }

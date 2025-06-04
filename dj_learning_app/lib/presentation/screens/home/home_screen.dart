@@ -1,9 +1,51 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import '../../../core/constants/colors.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int lastUnlockedLesson = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProgression();
+  }
+
+final storage = FlutterSecureStorage();
+
+void fetchProgression() async {
+  String? userId = await storage.read(key: 'user_id'); // récupération sécurisée
+
+  if (userId == null) {
+    print('❌ No user ID found in secure storage');
+    return;
+  }
+
+  try {
+    final res = await http.get(Uri.parse('http://localhost:18080/users/$userId/progression'));
+    print('📦 API progression: ${res.body}');
+    if (res.statusCode == 200) {
+      final json = jsonDecode(res.body);
+      final int nextLesson = json['nextLesson'] ?? 1;
+      setState(() {
+        lastUnlockedLesson = nextLesson;
+      });
+      print('🔓 Leçon débloquée: $lastUnlockedLesson');
+    }
+  } catch (e) {
+    print('❌ Erreur fetch progression: $e');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -57,28 +99,33 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 120),
-              itemCount: 8,
+              reverse: true,
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 40),
+              itemCount: 12,
               itemBuilder: (context, index) {
+                final lessonId = index + 1;
+                final isUnlocked = lessonId <= lastUnlockedLesson;
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.grey.shade300,
-                    child: const Icon(Icons.lock, color: Colors.grey),
+                  child: GestureDetector(
+                    onTap: isUnlocked
+                        ? () {
+                            context.push('/lesson-runner/$lessonId');
+                          }
+                        : null,
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor:
+                          isUnlocked ? AppColors.primary : Colors.grey.shade300,
+                      child: Icon(
+                        isUnlocked ? Icons.play_arrow : Icons.lock,
+                        color: isUnlocked ? Colors.white : Colors.grey,
+                      ),
+                    ),
                   ),
                 );
               },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
-            child: FloatingActionButton(
-              backgroundColor: AppColors.primary,
-              onPressed: () {
-                context.push('/lesson-runner/1');
-              },
-              child: const Icon(Icons.play_arrow),
             ),
           ),
         ],

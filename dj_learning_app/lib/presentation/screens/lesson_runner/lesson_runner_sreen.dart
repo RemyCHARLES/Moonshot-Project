@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dj_learning_app/core/models/lesson.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,6 +32,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
 
   int _correctAnswers = 0;
   int _incorrectAnswers = 0;
+  bool _showNextLessonButton = false;
 
   @override
   void initState() {
@@ -89,6 +91,11 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         );
         _hasMore = false;
       });
+
+      final userId = await _getUserIdFromToken();
+      if (userId != null) {
+        await _markLessonAsCompleted(userId);
+      }
       return;
     }
 
@@ -323,8 +330,12 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
-                  onPressed: () {
-                    // Retour ou navigation après récapitulatif
+                  onPressed: () async {
+                    final userId = await _getUserIdFromToken();
+                    print("👤 ID récupéré dans recap: $userId"); // AJOUTE ÇA
+                    if (userId != null) {
+                      await _markLessonAsCompleted(userId);
+                    }
                     GoRouter.of(context).go('/home');
                   },
                   style: ElevatedButton.styleFrom(
@@ -389,5 +400,41 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         ),
       ),
     );
+  }
+  
+  Future<void> _markLessonAsCompleted(int userId) async {
+    final url = 'http://localhost:18080/users/$userId/progress';
+    final payload = {
+      "user_id": userId,
+      "lesson_id": int.parse(widget.lessonId),
+      "completed": true
+    };
+
+    print("📤 Sending lesson completion: $payload → $url");
+    if (!mounted) return;
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(payload),
+    );
+
+    if (response.statusCode == 200) {
+      print("✅ Lesson marked as completed successfully");
+      setState(() {
+        _showNextLessonButton = true;
+      });
+    } else {
+      print("❌ Failed to mark lesson as completed: ${response.statusCode} - ${response.body}");
+    }
+  }
+
+  Future<int?> _getUserIdFromToken() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'jwt_token');
+    if (token == null) return null;
+
+    final decoded = JwtDecoder.decode(token);
+    return int.tryParse(decoded['user_id'].toString());
   }
 }

@@ -4,14 +4,14 @@
 #include "../services/db_service.h"
 
 void setupProgressRoutes(crow::SimpleApp& app) {
-    // Get progress for a user
+    // Get raw progress data for a user
     CROW_ROUTE(app, "/users/<int>/progress").methods("GET"_method)(
         [](const crow::request& req, int userId) {
             DatabaseService db;
             return crow::response(db.getUserProgress(userId));
         });
 
-    // Update or create progress
+    // Create or update progress for a user
     CROW_ROUTE(app, "/users/<int>/progress").methods("POST"_method)(
         [](const crow::request& req, int userId) {
             auto body = crow::json::load(req.body);
@@ -19,11 +19,15 @@ void setupProgressRoutes(crow::SimpleApp& app) {
                 return crow::response(400, "Invalid JSON");
 
             int lesson_id = body["lesson_id"].i();
-            bool completed = body["completed"].b();
-            std::string updated_at = body["updated_at"].s();
-
             DatabaseService db;
-            db.upsertUserProgress(userId, lesson_id, completed, updated_at);
-            return crow::response(200, "Progress updated");
+            db.markLessonAsCompleted(userId, lesson_id);
+            return crow::response(200, "Lesson marked as completed");
         });
+
+    CROW_ROUTE(app, "/users/<int>/progression").methods("GET"_method)(
+        [](const crow::request& req, int userId) {
+            DatabaseService db;
+            return crow::response(db.getUserProgress(userId));
+        });
+
 }

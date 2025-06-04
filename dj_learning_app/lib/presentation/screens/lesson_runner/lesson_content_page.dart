@@ -8,6 +8,7 @@ class LessonContentPage extends StatelessWidget {
   final ValueChanged<int> onAnswerSelected;
   final int correctAnswers;
   final int incorrectAnswers;
+  final VoidCallback onLessonCompleted;
 
   const LessonContentPage({
     super.key,
@@ -17,6 +18,7 @@ class LessonContentPage extends StatelessWidget {
     required this.onAnswerSelected,
     required this.correctAnswers,
     required this.incorrectAnswers,
+    required this.onLessonCompleted,
   });
 
   @override

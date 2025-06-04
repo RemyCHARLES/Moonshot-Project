@@ -94,6 +94,8 @@ void add_user_routes(crow::SimpleApp& app) {
 
             crow::json::wvalue response;
             response["token"] = token;
+            response["user_id"] = user_id;
+            response["username"] = username;
             return crow::response{response};
         } catch (const std::exception& e) {
             return crow::response(500, std::string("Error: ") + e.what());
