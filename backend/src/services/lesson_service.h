@@ -18,7 +18,6 @@ public:
     static std::vector<LessonModel> getAllLessons();
     static LessonModel getLessonById(int lessonId);
     static void syncLessonsToDb(const std::vector<LessonModel>& lessons);
-    static void syncPagesToDb(int lessonId, const std::vector<PageModel>& pages); 
 };
 
 #endif // LESSON_SERVICE_H

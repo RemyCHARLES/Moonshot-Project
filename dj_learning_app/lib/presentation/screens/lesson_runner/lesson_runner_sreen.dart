@@ -5,6 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dj_learning_app/core/models/lesson.dart';
 import 'package:go_router/go_router.dart';
+import 'package:dj_learning_app/presentation/widgets/lesson_pages/beatmatch_page.dart';
 
 class LessonRunnerScreen extends StatefulWidget {
   final String lessonId;
@@ -65,7 +66,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
 
       setState(() {
         _page = LessonPageModel.fromJson(data);
-        _lessonTitle = data['lessonTitle'] ?? 'Leçon';
+        _lessonTitle = data['lessonTitle'] ?? 'Lesson';
         _totalPages = data['totalPages'] ?? 0;
         _selectedIndex = null;
         _hasValidated = false;
@@ -87,7 +88,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         _page = LessonPageModel(
           type: 'recap',
           question: '',
-          explanation: 'Merci d’avoir suivi cette leçon ! Vous pouvez consulter vos résultats ci-dessous.',
+          explanation: 'Thanks for following this lesson! You can review your results below.',
         );
         _hasMore = false;
       });
@@ -111,7 +112,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
 
       setState(() {
         _page = LessonPageModel.fromJson(data);
-        _lessonTitle = data['lessonTitle'] ?? 'Leçon';
+        _lessonTitle = data['lessonTitle'] ?? 'Lesson';
         _selectedIndex = null;
         _hasValidated = false;
         _isLoading = false;
@@ -123,7 +124,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         _page = LessonPageModel(
           type: 'recap',
           question: '',
-          explanation: 'Merci d’avoir suivi cette leçon ! Vous pouvez consulter vos résultats ci-dessous.',
+          explanation: 'Thanks for following this lesson! You can review your results below.',
         );
         _hasMore = false;
       });
@@ -140,8 +141,8 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
 
     if (_page == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Erreur')),
-        body: const Center(child: Text('Aucune page trouvée')),
+        appBar: AppBar(title: const Text('Error')),
+        body: const Center(child: Text('No page found')),
       );
     }
 
@@ -154,7 +155,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Étape ${_currentIndex + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('Step ${_currentIndex + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
                 LinearProgressIndicator(
                   value: (_totalPages > 0) ? (_currentIndex + 1) / _totalPages : 0.0, // ⚠️ Adapter ce nombre si besoin
@@ -178,7 +179,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                                    (_page?.type != 'mcq' || (_hasValidated && _selectedIndex != null)))
                           ? _nextPage
                           : null,
-                      child: const Text("Suivant"),
+                      child: const Text("Next"),
                     ),
                   ),
               ],
@@ -250,7 +251,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                     backgroundColor: Colors.purple,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text("Valider"),
+                  child: const Text("Submit"),
                 ),
               ),
             if (_hasValidated)
@@ -259,7 +260,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                 child: Column(
                   children: [
                     Text(
-                      _selectedIndex == page.correctIndex ? "Bonne réponse ✅" : "Mauvaise réponse ❌",
+                      _selectedIndex == page.correctIndex ? "Correct answer ✅" : "Incorrect answer ❌",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: _selectedIndex == page.correctIndex ? Colors.green : Colors.red,
@@ -309,7 +310,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Récapitulatif de la leçon",
+                  "Lesson Recap",
                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -324,8 +325,8 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildResultBox("Bonnes réponses", _correctAnswers, Colors.orange),
-                    _buildResultBox("Mauvaises réponses", _incorrectAnswers, Colors.purple),
+                    _buildResultBox("Correct answers", _correctAnswers, Colors.orange),
+                    _buildResultBox("Incorrect answers", _incorrectAnswers, Colors.purple),
                   ],
                 ),
                 const SizedBox(height: 40),
@@ -346,11 +347,15 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Text("CONTINUER"),
+                  child: const Text("CONTINUE"),
                 ),
               ],
             ),
           ),
+        );
+      case 'beatmatch':
+        return BeatmatchPage(
+          data: page.toJson(),
         );
       default:
         return Center(

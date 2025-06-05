@@ -56,13 +56,13 @@ class LessonContentPage extends StatelessWidget {
       case 'recap':
         return Column(
           children: [
-            Text('Leçon terminée 🎉'),
-            Text('Bonnes réponses : $correctAnswers'),
-            Text('Mauvaises réponses : $incorrectAnswers'),
+            Text('Lesson completed 🎉'),
+            Text('Correct answers: $correctAnswers'),
+            Text('Incorrect answers: $incorrectAnswers'),
           ],
         );
       default:
-        return const Text('Type de page non supporté');
+        return const Text('Unsupported page type');
     }
   }
 }

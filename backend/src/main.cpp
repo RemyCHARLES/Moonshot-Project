@@ -1,12 +1,14 @@
 #include "crow.h"
 #include "services/db_service.h"
 #include "services/lesson_service.h"
+#include "services/audio_service.h"
 #include "routes/user_routes.h"
 #include "routes/lesson_routes.h"
 #include "routes/progress_routes.h"
 #include "routes/reward_routes.h"
 #include "routes/performance_routes.h"
 #include "routes/completion_routes.h"
+#include "routes/audio_routes.h"
 
 int main() {
     // Test DB connection
@@ -18,6 +20,14 @@ int main() {
         LessonService::syncLessonsToDb(lessons);
     } catch (const std::exception& e) {
         std::cerr << "❌ Erreur lors de la synchronisation des leçons : " << e.what() << std::endl;
+    }
+
+    // Auto-import audio files from folder
+    try {
+        AudioService audioService;
+        audioService.importAudioFiles("../src/assets/audio");
+    } catch (const std::exception& e) {
+        std::cerr << "❌ Erreur lors de l'importation des fichiers audio : " << e.what() << std::endl;
     }
 
     // Create API app
@@ -55,6 +65,7 @@ int main() {
     setupRewardRoutes(app);
     setupPerformanceRoutes(app);
     setupCompletionRoutes(app);
+    setupAudioRoutes(app);
 
     std::cout << "🚀 Starting API server on port 18080..." << std::endl;
     app.port(18080).multithreaded().run();

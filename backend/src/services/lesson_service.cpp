@@ -47,6 +47,11 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
             page_json["options"] = page.contains("options") ? page["options"] : nlohmann::json();
             page_json["correctIndex"] = page.contains("correctIndex") ? page["correctIndex"] : nlohmann::json();
             page_json["explanation"] = page.contains("explanation") ? page["explanation"] : nlohmann::json();
+            page_json["fileA"] = page.contains("fileA") ? page["fileA"] : nlohmann::json();
+            page_json["fileB"] = page.contains("fileB") ? page["fileB"] : nlohmann::json();
+            page_json["initialOffsetMs"] = page.contains("initialOffsetMs") ? page["initialOffsetMs"] : nlohmann::json(nullptr);
+            page_json["toleranceMs"] = page.contains("toleranceMs") ? page["toleranceMs"] : nlohmann::json(nullptr);
+            page_json["successDurationMs"] = page.contains("successDurationMs") ? page["successDurationMs"] : nlohmann::json(nullptr);
             lesson_json["pages"].push_back(page_json);
         }
 

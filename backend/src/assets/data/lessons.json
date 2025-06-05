@@ -1,65 +1,81 @@
 [
-    {
-      "id": 1,
-      "title": "Introduction au DJing",
-      "totalPages": 5,
-      "pages": [
-        {
-          "type": "text",
-          "question": "Bienvenue dans votre première leçon de DJing. Dans cette leçon, nous allons explorer les bases du mixage.",
-          "options": null,
-          "correctIndex": null,
-          "explanation": null
-        },
-        {
-          "type": "text",
-          "question": "Un DJ est une personne qui sélectionne, mixe et enchaîne des morceaux de musique pour créer une ambiance unique.",
-          "options": null,
-          "correctIndex": null,
-          "explanation": null
-        },
-        {
-          "type": "mcq",
-          "question": "Quel est l'outil principal utilisé pour mixer deux pistes audio ?",
-          "options": ["Le crossfader", "Le volume", "Le pitch", "L'égaliseur"],
-          "correctIndex": 0,
-          "explanation": "Le crossfader permet de mélanger les deux pistes en douceur en passant de l'une à l'autre."
-        },
-        {
-          "type": "mcq",
-          "question": "Quelle est la fonction principale du bouton 'cue' sur une platine DJ ?",
-          "options": ["Lancer un effet", "Déclencher un sample", "Préécouter une piste", "Changer de BPM"],
-          "correctIndex": 2,
-          "explanation": "Le bouton 'cue' permet au DJ de préécouter une piste dans son casque sans que le public ne l'entende."
-        },
-        {
-          "type": "text",
-          "question": "Félicitations ! Vous venez de terminer la leçon d’introduction. Vous êtes maintenant prêt à découvrir les techniques de base du DJing.",
-          "options": null,
-          "correctIndex": null,
-          "explanation": null
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Techniques de base",
-      "totalPages": 2,
-      "pages": [
-        {
-          "type": "text",
-          "question": "Utilisation du crossfader.",
-          "options": null,
-          "correctIndex": null,
-          "explanation": null
-        },
-        {
-          "type": "text",
-          "question": "Synchronisation des pistes.",
-          "options": null,
-          "correctIndex": null,
-          "explanation": null
-        }
-      ]
-    }
-  ]
+  {
+    "id": 1,
+    "title": "Introduction to DJing",
+    "totalPages": 5,
+    "pages": [
+      {
+        "type": "text",
+        "question": "Welcome to your first DJing lesson. In this lesson, we will explore the basics of mixing.",
+        "options": null,
+        "correctIndex": null,
+        "explanation": null
+      },
+      {
+        "type": "text",
+        "question": "A DJ is a person who selects, mixes, and transitions between tracks to create a unique atmosphere.",
+        "options": null,
+        "correctIndex": null,
+        "explanation": null
+      },
+      {
+        "type": "mcq",
+        "question": "What is the main tool used to mix two audio tracks?",
+        "options": ["The crossfader", "The volume", "The pitch", "The equalizer"],
+        "correctIndex": 0,
+        "explanation": "The crossfader allows smooth blending between the two tracks by moving from one to the other."
+      },
+      {
+        "type": "mcq",
+        "question": "What is the main function of the 'cue' button on a DJ deck?",
+        "options": ["Trigger an effect", "Launch a sample", "Preview a track", "Change the BPM"],
+        "correctIndex": 2,
+        "explanation": "The 'cue' button allows the DJ to preview a track in their headphones without the audience hearing it."
+      },
+      {
+        "type": "text",
+        "question": "Congratulations! You have completed the introduction lesson. You are now ready to explore the basic DJing techniques.",
+        "options": null,
+        "correctIndex": null,
+        "explanation": null
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Basic Techniques",
+    "totalPages": 4,
+    "pages": [
+      {
+        "type": "text",
+        "question": "In this lesson, we’ll dive into intermediate DJ techniques focused on synchronization and beatmatching.",
+        "options": null,
+        "correctIndex": null,
+        "explanation": null
+      },
+      {
+        "type": "mcq",
+        "question": "Which feature helps align two tracks with different tempos?",
+        "options": ["Cue point", "Crossfader", "Sync button", "Looping"],
+        "correctIndex": 2,
+        "explanation": "The Sync button automatically matches the BPM and phase of two tracks."
+      },
+      {
+        "type": "beatmatch",
+        "question": "Try beatmatching two tracks manually. Focus on aligning the beats by adjusting the pitch.",
+        "fileA": "beat1.mp3",
+        "fileB": "beat1.mp3",
+        "initialOffsetMs": 180,
+        "toleranceMs": 50,
+        "successDurationMs": 2000
+      },
+      {
+        "type": "mcq",
+        "question": "What does adjusting the pitch fader do?",
+        "options": ["Changes volume", "Changes BPM", "Adds echo", "Triggers effects"],
+        "correctIndex": 1,
+        "explanation": "The pitch fader increases or decreases the speed (and thus the BPM) of a track."
+      }
+    ]
+  }
+]

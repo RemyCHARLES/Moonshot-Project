@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/constants/colors.dart';
+import '../../../core/navigation/route_observer.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with RouteAware {
   int lastUnlockedLesson = 1;
 
   @override
@@ -21,10 +22,28 @@ class _HomeScreenState extends State<HomeScreen> {
     fetchProgression();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when returning to this page
+    fetchProgression();
+  }
+
 final storage = FlutterSecureStorage();
 
 void fetchProgression() async {
-  String? userId = await storage.read(key: 'user_id'); // récupération sécurisée
+  String? userId = await storage.read(key: 'user_id'); // Secure retrieval
 
   if (userId == null) {
     print('❌ No user ID found in secure storage');
@@ -40,10 +59,10 @@ void fetchProgression() async {
       setState(() {
         lastUnlockedLesson = nextLesson;
       });
-      print('🔓 Leçon débloquée: $lastUnlockedLesson');
+      print('🔓 Unlocked lesson: $lastUnlockedLesson');
     }
   } catch (e) {
-    print('❌ Erreur fetch progression: $e');
+    print('❌ Error fetching progression: $e');
   }
 }
 
@@ -108,16 +127,36 @@ void fetchProgression() async {
                 final isUnlocked = lessonId <= lastUnlockedLesson;
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: GestureDetector(
-                    onTap: isUnlocked
-                        ? () {
-                            context.push('/lesson-runner/$lessonId');
-                          }
-                        : null,
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor:
-                          isUnlocked ? AppColors.primary : Colors.grey.shade300,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: lessonId < lastUnlockedLesson
+                          ? Colors.lightBlueAccent
+                          : lessonId == lastUnlockedLesson
+                              ? AppColors.primary
+                              : Colors.grey.shade300,
+                      boxShadow: [
+                        if (isUnlocked)
+                          BoxShadow(
+                            color: lessonId < lastUnlockedLesson
+                                ? const Color.fromARGB(255, 0, 113, 166)
+                                : const Color.fromARGB(255, 110, 0, 157),
+                                
+                            offset: const Offset(0, 4),
+                            blurRadius: 0,
+                            spreadRadius: 0.3,
+                          )
+                      ],
+                    ),
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: isUnlocked
+                          ? () {
+                              context.go('/lesson-runner/$lessonId');
+                            }
+                          : null,
                       child: Icon(
                         isUnlocked ? Icons.play_arrow : Icons.lock,
                         color: isUnlocked ? Colors.white : Colors.grey,
@@ -127,35 +166,6 @@ void fetchProgression() async {
                 );
               },
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.background,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: Colors.black,
-        currentIndex: 0,
-        onTap: (index) {},
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.headphones),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: '',
           ),
         ],
       ),
