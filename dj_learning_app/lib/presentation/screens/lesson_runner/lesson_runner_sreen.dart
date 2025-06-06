@@ -6,6 +6,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dj_learning_app/core/models/lesson.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dj_learning_app/presentation/widgets/lesson_pages/beatmatch_page.dart';
+import 'package:dj_learning_app/presentation/widgets/lesson_pages/mcq_page.dart';
+import 'package:dj_learning_app/presentation/widgets/lesson_pages/text_page.dart';
+import 'package:dj_learning_app/presentation/widgets/lesson_pages/recap_page.dart';
 
 class LessonRunnerScreen extends StatefulWidget {
   final String lessonId;
@@ -71,6 +74,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         _selectedIndex = null;
         _hasValidated = false;
         _isLoading = false;
+        _showNextLessonButton = false;
         // Set _hasMore to false if this is the recap page
         _hasMore = data['type'] != 'recap';
       });
@@ -91,6 +95,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
           explanation: 'Thanks for following this lesson! You can review your results below.',
         );
         _hasMore = false;
+        _showNextLessonButton = false;
       });
 
       final userId = await _getUserIdFromToken();
@@ -118,6 +123,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         _isLoading = false;
         _totalPages = data['totalPages'] ?? _totalPages;
         _hasMore = _currentIndex < _totalPages - 1;
+        _showNextLessonButton = false;
       });
     } else {
       setState(() {
@@ -127,6 +133,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
           explanation: 'Thanks for following this lesson! You can review your results below.',
         );
         _hasMore = false;
+        _showNextLessonButton = false;
       });
     }
   }
@@ -175,8 +182,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ElevatedButton(
-                      onPressed: ((_hasMore || _currentIndex >= _totalPages - 1) &&
-                                   (_page?.type != 'mcq' || (_hasValidated && _selectedIndex != null)))
+                      onPressed: (_showNextLessonButton ||
+                                  ((_hasMore || _currentIndex >= _totalPages - 1) &&
+                                   (_page?.type != 'mcq' || (_hasValidated && _selectedIndex != null))))
                           ? _nextPage
                           : null,
                       child: const Text("Next"),
@@ -193,169 +201,42 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
   Widget _buildPageContent(LessonPageModel page) {
     switch (page.type) {
       case 'mcq':
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text(
-                page.question,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            ...?page.options?.asMap().entries.map((entry) {
-              final index = entry.key;
-              final option = entry.value;
-              final isSelected = index == _selectedIndex;
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isSelected ? Colors.blueAccent.withOpacity(0.3) : Colors.transparent,
-                    border: Border.all(
-                      color: isSelected ? Colors.blueAccent : Colors.grey,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ListTile(
-                    title: Text(option, textAlign: TextAlign.center),
-                    onTap: _hasValidated
-                        ? null
-                        : () {
-                            setState(() {
-                              _selectedIndex = index;
-                            });
-                          },
-                  ),
-                ),
-              );
-            }),
-            if (_selectedIndex != null && !_hasValidated)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _hasValidated = true;
-                      if (_selectedIndex == page.correctIndex) {
-                        _correctAnswers++;
-                      } else {
-                        _incorrectAnswers++;
-                      }
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text("Submit"),
-                ),
-              ),
-            if (_hasValidated)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      _selectedIndex == page.correctIndex ? "Correct answer ✅" : "Incorrect answer ❌",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: _selectedIndex == page.correctIndex ? Colors.green : Colors.red,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    if (page.explanation != null)
-                      Text(
-                        page.explanation!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                  ],
-                ),
-              ),
-          ],
+        return McqPage(
+          page: page,
+          onValidated: (bool isCorrect) {
+            setState(() {
+              if (isCorrect) {
+                _correctAnswers++;
+              } else {
+                _incorrectAnswers++;
+              }
+              _showNextLessonButton = true;
+            });
+          },
         );
       case 'text':
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  page.question,
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                if (page.explanation != null) ...[
-                  const SizedBox(height: 24),
-                  Text(
-                    page.explanation!,
-                    style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
-                    textAlign: TextAlign.center,
-                  )
-                ]
-              ],
-            ),
-          ),
-        );
+        return TextPage(page: page);
       case 'recap':
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Lesson Recap",
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                if (page.explanation != null)
-                  Text(
-                    page.explanation!,
-                    style: const TextStyle(fontSize: 16, color: Colors.black54),
-                    textAlign: TextAlign.center,
-                  ),
-                const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildResultBox("Correct answers", _correctAnswers, Colors.orange),
-                    _buildResultBox("Incorrect answers", _incorrectAnswers, Colors.purple),
-                  ],
-                ),
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () async {
-                    final userId = await _getUserIdFromToken();
-                    print("👤 ID récupéré dans recap: $userId"); // AJOUTE ÇA
-                    if (userId != null) {
-                      await _markLessonAsCompleted(userId);
-                    }
-                    GoRouter.of(context).go('/home');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const Text("CONTINUE"),
-                ),
-              ],
-            ),
-          ),
+        return RecapPage(
+          explanation: page.explanation,
+          correctAnswers: _correctAnswers,
+          incorrectAnswers: _incorrectAnswers,
+          getUserId: _getUserIdFromToken,
+          markLessonAsCompleted: _markLessonAsCompleted,
         );
       case 'beatmatch':
         return BeatmatchPage(
           data: page.toJson(),
+          onValidated: (bool isCorrect) {
+            setState(() {
+              if (isCorrect) {
+                _correctAnswers++;
+              } else {
+                _incorrectAnswers++;
+              }
+              _showNextLessonButton = true;
+            });
+          },
         );
       default:
         return Center(
@@ -384,29 +265,6 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     }
   }
 
-  Widget _buildResultBox(String label, int value, Color color) {
-    return Container(
-      width: 120,
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: color, width: 2),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Center(
-        child: Text(
-          "$value\n$label",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
-        ),
-      ),
-    );
-  }
-  
   Future<void> _markLessonAsCompleted(int userId) async {
     final url = 'http://localhost:18080/users/$userId/progress';
     final payload = {

@@ -3,8 +3,9 @@ import 'package:just_audio/just_audio.dart';
 
 class BeatmatchPage extends StatefulWidget {
   final Map<String, dynamic> data;
+  final void Function(bool isCorrect)? onValidated;
 
-  const BeatmatchPage({super.key, required this.data});
+  const BeatmatchPage({super.key, required this.data, this.onValidated});
 
   @override
   State<BeatmatchPage> createState() => _BeatmatchPageState();
@@ -14,11 +15,21 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
   late AudioPlayer playerA;
   late AudioPlayer playerB;
 
+  bool _hasValidated = false;
+  bool _isCorrect = false;
+  int _offsetMs = 0;
+
+  static int _correctAnswers = 0;
+  static int _incorrectAnswers = 0;
+
   @override
   void initState() {
     super.initState();
     playerA = AudioPlayer();
     playerB = AudioPlayer();
+
+    playerA.setLoopMode(LoopMode.one);
+    playerB.setLoopMode(LoopMode.one);
 
     playerA.playerStateStream.listen((state) {
       print("🎧 playerA → ${state.processingState}, playing: ${state.playing}");
@@ -74,48 +85,112 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          '🔊 Beatmatch Exercise',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        Text('A: ${widget.data['fileA']} | B: ${widget.data['fileB']}'),
-        const SizedBox(height: 20),
-        const Text('Use the arrows to adjust the track B until it syncs.'),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () async {
-            try {
-              await playerA.play();
-              await playerB.play();
-              print('▶️ Both players started');
-            } catch (e) {
-              print('❌ Error starting playback: $e');
-            }
-          },
-          child: const Text('Play Both Tracks'),
-        ),
-        const SizedBox(height: 40),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.fast_rewind),
-              onPressed: () {
-                playerB.seek(playerB.position - const Duration(milliseconds: 100));
-              },
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            '🎧 Beatmatch Exercise',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          Text('Track A: ${widget.data['fileA']}'),
+          const SizedBox(height: 10),
+          Container(
+            height: 50,
+            color: Colors.grey[300],
+            alignment: Alignment.center,
+            child: const Text('Player A Waveform'),
+          ),
+          const SizedBox(height: 20),
+          Text('Track B: ${widget.data['fileB']}'),
+          const SizedBox(height: 10),
+          Container(
+            height: 50,
+            color: Colors.grey[300],
+            alignment: Alignment.center,
+            child: const Text('Player B Waveform'),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            'Jog Wheel Control',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                iconSize: 40,
+                icon: const Icon(Icons.arrow_left),
+                onPressed: () {
+                  playerB.seek(playerB.position - const Duration(milliseconds: 10));
+                },
+              ),
+              const SizedBox(width: 40),
+              IconButton(
+                iconSize: 40,
+                icon: const Icon(Icons.arrow_right),
+                onPressed: () {
+                  playerB.seek(playerB.position + const Duration(milliseconds: 10));
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.play_arrow),
+            label: const Text('Start Looping Playback'),
+            onPressed: () async {
+              try {
+                await Future.wait([playerA.seek(Duration.zero), playerB.seek(Duration.zero)]);
+                await Future.wait([playerA.play(), playerB.play()]);
+                print('▶️ Both players started');
+              } catch (e) {
+                print('❌ Error starting playback: $e');
+              }
+            },
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.check),
+            label: const Text('Validate Sync'),
+            onPressed: () async {
+              await playerA.stop();
+              await playerB.stop();
+
+              final toleranceMs = widget.data['toleranceMs'] ?? 50;
+              final offset = playerA.position.inMilliseconds - playerB.position.inMilliseconds;
+              final isCorrect = offset.abs() <= toleranceMs;
+
+              setState(() {
+                _hasValidated = true;
+                _isCorrect = isCorrect;
+                _offsetMs = offset;
+                if (_isCorrect) {
+                  _BeatmatchPageState._correctAnswers++;
+                } else {
+                  _BeatmatchPageState._incorrectAnswers++;
+                }
+              });
+              widget.onValidated?.call(_isCorrect);
+            },
+          ),
+          if (_hasValidated)
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(
+                _isCorrect ? "Correct answer ✅" : "Incorrect answer ❌",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: _isCorrect ? Colors.green : Colors.red,
+                ),
+              ),
             ),
-            const SizedBox(width: 20),
-            IconButton(
-              icon: const Icon(Icons.fast_forward),
-              onPressed: () {
-                playerB.seek(playerB.position + const Duration(milliseconds: 100));
-              },
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
