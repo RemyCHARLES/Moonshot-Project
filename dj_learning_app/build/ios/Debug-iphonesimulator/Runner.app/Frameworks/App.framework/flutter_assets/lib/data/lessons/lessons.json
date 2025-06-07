@@ -1,0 +1,20 @@
+[
+    {
+      "id": "lesson1",
+      "title": "Basics of DJing",
+      "pages": [
+        {
+          "type": "multiple_choice",
+          "question": "What does BPM mean?",
+          "options": ["Bars Per Minute", "Beats Per Minute", "Bass Pattern Measure"],
+          "correctIndex": 1,
+          "explanation": "BPM = Beats Per Minute."
+        },
+        {
+          "type": "info",
+          "question": "Tempo refers to the speed of a track, measured in BPM.",
+          "explanation": "This helps you align two songs."
+        }
+      ]
+    }
+  ]
