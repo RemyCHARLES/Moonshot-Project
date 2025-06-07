@@ -78,6 +78,8 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         // Set _hasMore to false if this is the recap page
         _hasMore = data['type'] != 'recap';
       });
+      _selectedIndex = null;
+      _hasValidated = false;
     } else {
       setState(() {
         _hasMore = false;
@@ -125,6 +127,8 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         _hasMore = _currentIndex < _totalPages - 1;
         _showNextLessonButton = false;
       });
+      _selectedIndex = null;
+      _hasValidated = false;
     } else {
       setState(() {
         _page = LessonPageModel(
@@ -202,6 +206,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     switch (page.type) {
       case 'mcq':
         return McqPage(
+          key: ValueKey(_currentIndex),
           page: page,
           onValidated: (bool isCorrect) {
             setState(() {
@@ -215,9 +220,13 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
           },
         );
       case 'text':
-        return TextPage(page: page);
+        return TextPage(
+          key: ValueKey(_currentIndex),
+          page: page,
+        );
       case 'recap':
         return RecapPage(
+          key: ValueKey(_currentIndex),
           explanation: page.explanation,
           correctAnswers: _correctAnswers,
           incorrectAnswers: _incorrectAnswers,
@@ -226,6 +235,7 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
         );
       case 'beatmatch':
         return BeatmatchPage(
+          key: ValueKey(_currentIndex),
           data: page.toJson(),
           onValidated: (bool isCorrect) {
             setState(() {

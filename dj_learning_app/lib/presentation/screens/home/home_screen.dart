@@ -121,7 +121,7 @@ void fetchProgression() async {
               reverse: true,
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 40),
-              itemCount: 12,
+              itemCount: 10,
               itemBuilder: (context, index) {
                 final lessonId = index + 1;
                 final isUnlocked = lessonId <= lastUnlockedLesson;
