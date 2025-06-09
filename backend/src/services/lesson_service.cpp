@@ -1,26 +1,45 @@
-// src/services/lesson_service.cpp
+// backend/src/services/lesson_service.cpp
+// ------------------------------------------------------------
+// Beatquest – Lesson Service Implementation
+// ------------------------------------------------------------
+// This service loads lessons and associated pages from a JSON file
+// and optionally synchronizes them into a PostgreSQL database.
+//
+// It provides two main functionalities:
+//   - `loadLessonsFromFile`: parses a structured JSON file into
+//     LessonModel and PageModel instances
+//   - `syncLessonsToDb`: inserts or updates lessons and their pages
+//     into the database, replacing existing page entries per lesson
+//
+// Dependencies: nlohmann/json, libpqxx
+// ------------------------------------------------------------
+
 #include "lesson_service.h"
-#include <fstream>
+#include <fstream>       // For reading lesson JSON files
 #include <iostream> 
-#include "json.hpp"
+#include "json.hpp"      // nlohmann::json for JSON parsing
 #include "../models/lesson_model.h"
 #include "../models/page_model.h"
-#include <pqxx/pqxx>
+#include <pqxx/pqxx>     // PostgreSQL access (libpqxx)
 
-// Dans lesson_service.cpp
+// Load all lessons from a JSON file on disk and return as objects
 std::vector<LessonModel> LessonService::loadLessonsFromFile() {
     std::ifstream file("../src/assets/data/lessons.json", std::ios::binary);
     if (!file) {
-        std::cerr << "[ERREUR] Impossible d’ouvrir le fichier JSON.\n";
-        throw std::runtime_error("Fichier JSON introuvable.");
+        std::cerr << "[ERROR] Failed to open lessons.json\n";
+        throw std::runtime_error("JSON file not found.");
     }
+
+    // Read entire file content into a string
     std::ostringstream oss;
     oss << file.rdbuf();
     std::string content = oss.str();
-    nlohmann::json lessons = nlohmann::json::parse(content);
 
+    // Parse string as JSON
+    nlohmann::json lessons = nlohmann::json::parse(content);
     std::vector<LessonModel> lessonList;
 
+    // Iterate through all lessons
     for (const auto& lessonData : lessons) {
         LessonModel lesson;
         lesson.id = lessonData["id"];
@@ -37,10 +56,10 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
         for (const auto& page : lessonData["pages"]) {
             PageModel p;
             p.step = step++;
-            // p.type = page.contains("type") ? page["type"] : "text"; // PageModel doesn't have type
             p.content = page.contains("question") ? page["question"] : page["content"];
             lesson.pages.push_back(p);
 
+            // Create full JSON page object with optional fields
             nlohmann::json page_json;
             page_json["type"] = page.contains("type") ? page["type"] : "text";
             page_json["question"] = p.content;
@@ -52,6 +71,7 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
             page_json["initialOffsetMs"] = page.contains("initialOffsetMs") ? page["initialOffsetMs"] : nlohmann::json(nullptr);
             page_json["toleranceMs"] = page.contains("toleranceMs") ? page["toleranceMs"] : nlohmann::json(nullptr);
             page_json["successDurationMs"] = page.contains("successDurationMs") ? page["successDurationMs"] : nlohmann::json(nullptr);
+
             lesson_json["pages"].push_back(page_json);
         }
 
@@ -62,23 +82,26 @@ std::vector<LessonModel> LessonService::loadLessonsFromFile() {
     return lessonList;
 }
 
+// Synchronize lesson data into the PostgreSQL database
 void LessonService::syncLessonsToDb(const std::vector<LessonModel>& lessons) {
     pqxx::connection conn("dbname=dj_app user=postgres");
     pqxx::work txn(conn);
 
     for (const auto& lesson : lessons) {
+        // Insert or update lesson entry (by ID)
         txn.exec_params(
             "INSERT INTO lessons (id, title, position) "
             "VALUES ($1, $2, $3) "
             "ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, position = EXCLUDED.position;",
             lesson.id,
             lesson.title,
-            lesson.id  // using lesson ID as position for now
+            lesson.id  // Use lesson ID as position
         );
 
-        // Clear existing pages for this lesson
+        // Clear any existing pages for this lesson
         txn.exec_params("DELETE FROM pages WHERE lesson_id = $1;", lesson.id);
 
+        // Insert each page as individual rows
         for (const auto& page : lesson.pages) {
             const auto& page_json = lesson.serialized_json["pages"][page.step];
             txn.exec_params(
@@ -92,5 +115,5 @@ void LessonService::syncLessonsToDb(const std::vector<LessonModel>& lessons) {
     }
 
     txn.commit();
-    std::cout << "✅ Leçons et pages synchronisées depuis le fichier JSON.\n";
+    std::cout << "✅ Lessons and pages synced from JSON.\n";
 }

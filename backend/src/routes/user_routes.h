@@ -1,12 +1,37 @@
-#pragma once
-#include "crow.h"
-#include "../services/db_service.h"
-#include <pqxx/zview>
-#include <jwt-cpp/jwt.h>
+// backend/src/routes/user_routes.h
+// ------------------------------------------------------------
+// Beatquest – User Routes (Crow HTTP API)
+// ------------------------------------------------------------
+// This file defines all user-related routes for registration,
+// login, and authenticated session retrieval. It includes JWT-based
+// authentication and uses PostgreSQL for persistence.
+//
+// Routes:
+//   - POST /register       → Create a new user and return JWT
+//   - POST /login          → Authenticate user and return JWT
+//   - GET /me/sessions     → Return user’s session history (requires JWT)
+//
+// Dependencies:
+//   - crow.h : Lightweight web server
+//   - pqxx   : PostgreSQL C++ client
+//   - jwt-cpp: JWT generation and decoding
+// ------------------------------------------------------------
 
+#pragma once
+
+#include "crow.h"                       // Crow web server framework
+#include "../services/db_service.h"    // DB access layer
+#include <pqxx/zview>                  // PostgreSQL result processing
+#include <jwt-cpp/jwt.h>               // JWT creation and decoding
+
+// Registers user-related API endpoints
 void add_user_routes(crow::SimpleApp& app) {
+    // ------------------------------------------------------------
+    // POST /register
+    // Registers a new user (username, email, password)
+    // ------------------------------------------------------------
     CROW_ROUTE(app, "/register").methods("POST"_method)([](const crow::request& req) {
-        auto body = crow::json::load(req.body);
+        auto body = crow::json::load(req.body);  // Parse request JSON
         if (!body)
             return crow::response(400, "Invalid JSON");
 
@@ -25,7 +50,6 @@ void add_user_routes(crow::SimpleApp& app) {
                 username,
                 email
             );
-
             if (!check.empty()) {
                 return crow::response(409, "User already exists");
             }
@@ -37,10 +61,10 @@ void add_user_routes(crow::SimpleApp& app) {
                 email,
                 password
             );
-
             int user_id = result[0]["id"].as<int>();
             txn.commit();
 
+            // Create JWT token
             auto token = jwt::create()
                 .set_issuer("dj-app")
                 .set_type("JWS")
@@ -57,6 +81,10 @@ void add_user_routes(crow::SimpleApp& app) {
         }
     });
 
+    // ------------------------------------------------------------
+    // POST /login
+    // Authenticates user and returns JWT + user data
+    // ------------------------------------------------------------
     CROW_ROUTE(app, "/login").methods("POST"_method)([](const crow::request& req) {
         auto body = crow::json::load(req.body);
         if (!body)
@@ -64,7 +92,6 @@ void add_user_routes(crow::SimpleApp& app) {
 
         std::string username = body["username"].s();
         std::string password = body["password"].s();
-        std::cout << "username: " << username << ", password: " << password << std::endl;
 
         try {
             DatabaseService db;
@@ -81,7 +108,6 @@ void add_user_routes(crow::SimpleApp& app) {
                 return crow::response(401, "Invalid credentials");
             }
 
-            // Assuming the first row contains the user ID
             int user_id = r[0]["id"].as<int>();
 
             auto token = jwt::create()
@@ -102,17 +128,25 @@ void add_user_routes(crow::SimpleApp& app) {
         }
     });
 
+    // ------------------------------------------------------------
+    // GET /me/sessions
+    // Returns sessions for the authenticated user
+    // Requires: Bearer Token in Authorization header
+    // ------------------------------------------------------------
     CROW_ROUTE(app, "/me/sessions").methods("GET"_method)([](const crow::request& req) {
         try {
             std::string auth_header = req.get_header_value("Authorization");
             std::string token = auth_header.substr(strlen("Bearer "));
             auto decoded_token = jwt::decode(token);
+
+            // Extract user ID from token
             int user_id = std::stoi(decoded_token.get_payload_claim("user_id").as_string());
 
             DatabaseService db;
             pqxx::connection conn = db.connect();
             pqxx::work txn(conn);
 
+            // Set row-level context for PostgreSQL RLS policies
             txn.exec_params("SELECT set_config('app.current_user_id', $1, false)", std::to_string(user_id));
 
             pqxx::result r = txn.exec_params(
