@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "title": "Introduction to DJing",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Welcome to the world of DJing! Let's explore what it means to be a DJ." },
+      { "type": "text", "question": "A DJ selects, mixes, and transitions between tracks to create musical experiences." },
+      { "type": "mcq", "question": "What does 'DJ' stand for?", "options": ["Disc Jockey", "Digital Jumper", "Dynamic Jockey", "Dance Jammer"], "correctIndex": 0, "explanation": "DJ means Disc Jockey." },
+      { "type": "mcq", "question": "Which of these is NOT a type of DJ equipment?", "options": ["Turntable", "Mixer", "Cue point", "Controller"], "correctIndex": 2, "explanation": "Cue point is a function, not a piece of equipment." },
+      { "type": "text", "question": "There are many styles of DJing: club, radio, scratch, and more." },
+      { "type": "mcq", "question": "Which genre is historically associated with early DJ culture?", "options": ["Rock", "Hip Hop", "Classical", "Reggae"], "correctIndex": 1, "explanation": "Hip Hop culture helped pioneer turntablism." },
+      { "type": "mcq", "question": "Which role best describes a DJ in a live set?", "options": ["Sound engineer", "Performer", "Producer", "Backup singer"], "correctIndex": 1, "explanation": "A DJ performs live by selecting and mixing music." },
+      { "type": "text", "question": "Good DJs read the crowd and adapt their set accordingly." },
+      { "type": "text", "question": "You're ready to explore the tools of the trade!" },
+      { "type": "text", "question": "Lesson 1 complete. Let's move on to gear and setup." }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Getting to Know the Equipment",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "This lesson covers the components of a DJ setup: decks, mixer, headphones." },
+      { "type": "mcq", "question": "What is the main function of a mixer?", "options": ["Play tracks", "Control lights", "Blend audio from decks", "Record music"], "correctIndex": 2, "explanation": "A mixer allows smooth transitions between audio sources." },
+      { "type": "mcq", "question": "Which part of the controller is used to start a track?", "options": ["Pitch fader", "Play button", "EQ knob", "Loop encoder"], "correctIndex": 1, "explanation": "The play button launches the track." },
+      { "type": "mcq", "question": "The 'cue' button is mainly used to:", "options": ["Launch FX", "Preview a track", "Switch decks", "Pause all sounds"], "correctIndex": 1, "explanation": "Cueing allows DJs to preview tracks in headphones." },
+      { "type": "text", "question": "Waveforms are graphical displays of audio. Learn to read them." },
+      { "type": "mcq", "question": "What does the pitch fader adjust?", "options": ["BPM", "Volume", "EQ", "Filter"], "correctIndex": 0, "explanation": "It adjusts the track's speed, and therefore BPM." },
+      { "type": "text", "question": "EQ knobs let you isolate bass, mids and highs. Practice using them." },
+      { "type": "mcq", "question": "What does cutting bass during a transition help with?", "options": ["Avoiding noise", "Maintaining phase", "Preventing frequency clash", "Increasing BPM"], "correctIndex": 2, "explanation": "Cutting bass avoids muddiness between tracks." },
+      { "type": "text", "question": "Next, we’ll explore song structures and how to mix them smoothly." },
+      { "type": "text", "question": "Lesson 2 done! You now know the basics of your gear." }
+    ]
+  }
+  ,
+  {
+    "id": 3,
+    "title": "Understanding Music Structure",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Songs have intro, verse, chorus, breakdown, drop, outro." },
+      { "type": "mcq", "question": "What part of the song usually contains the most energy?", "options": ["Intro", "Verse", "Drop", "Outro"], "correctIndex": 2, "explanation": "The drop releases tension and brings the energy up." },
+      { "type": "mcq", "question": "Why is knowing song structure important for DJs?", "options": ["To change lyrics", "To plan transitions", "To write music", "To record sets"], "correctIndex": 1, "explanation": "Understanding structure helps with smooth mixing." },
+      { "type": "text", "question": "The standard structure often follows 4, 8 or 16 bar patterns." },
+      { "type": "mcq", "question": "What’s a common structure unit for dance music?", "options": ["3 bars", "4 bars", "5 bars", "7 bars"], "correctIndex": 1, "explanation": "Dance music often follows 4-bar phrases." },
+      { "type": "text", "question": "Identifying drop and breakdown helps plan your mix." },
+      { "type": "mcq", "question": "Which section is ideal to begin a mix?", "options": ["Drop", "Chorus", "Intro", "Outro"], "correctIndex": 2, "explanation": "The intro often contains simple elements for easier mixing." },
+      { "type": "text", "question": "Practice beatmatching transitions across song sections." },
+      { "type": "mcq", "question": "What’s a 'phrase' in DJ terms?", "options": ["Lyrics", "Melody", "Section of bars", "Sound effect"], "correctIndex": 2, "explanation": "A phrase is a structured group of bars." },
+      { "type": "text", "question": "Good knowledge of structure enhances your flow." }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Basic Beatmatching",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Beatmatching is aligning beats of two tracks manually." },
+      { "type": "mcq", "question": "Which control adjusts a track's speed?", "options": ["Crossfader", "EQ knob", "Pitch fader", "Cue button"], "correctIndex": 2, "explanation": "Pitch fader changes BPM." },
+      { "type": "text", "question": "Use headphones to preview and align the beats before mixing in." },
+      { "type": "mcq", "question": "What does a jog wheel help with?", "options": ["Track selection", "Visuals", "Tempo adjustment", "Fine time alignment"], "correctIndex": 3, "explanation": "Jog wheel nudges the track slightly to align." },
+      { "type": "text", "question": "Start tracks on the 1st beat of the bar to keep sync." },
+      { "type": "beatmatch", "question": "Try beatmatching two tracks manually. Focus on aligning the beats by adjusting pitch.", "fileA": "beat1.mp3", "fileB": "beat1.mp3", "initialOffsetMs": 180, "toleranceMs": 50, "successDurationMs": 2000 },
+      { "type": "mcq", "question": "What’s the main goal of beatmatching?", "options": ["Louder output", "Perfect transition", "Add reverb", "Loop editing"], "correctIndex": 1, "explanation": "Beatmatching enables smooth transitions." },
+      { "type": "text", "question": "Beatmatching trains your ears and timing." },
+      { "type": "mcq", "question": "What happens if tracks are out of sync?", "options": ["Cleaner sound", "Rhythmic clash", "Better vocals", "No difference"], "correctIndex": 1, "explanation": "Mismatched beats cause rhythmic clash." },
+      { "type": "text", "question": "You’ve just taken the first step in manual syncing!" }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Using EQ and Filters",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "EQ allows control over frequency ranges: lows, mids, highs." },
+      { "type": "mcq", "question": "Which EQ band affects bass?", "options": ["Low", "Mid", "High", "All"], "correctIndex": 0, "explanation": "Low EQ controls the bass frequencies." },
+      { "type": "text", "question": "Use EQ cuts to make transitions clean and balanced." },
+      { "type": "mcq", "question": "What does cutting highs prevent?", "options": ["Bass clash", "Vocal interference", "Muddy transitions", "Distortion"], "correctIndex": 1, "explanation": "High cuts prevent vocal overlaps." },
+      { "type": "text", "question": "Practice isolating different parts of a track with EQ knobs." },
+      { "type": "mcq", "question": "What does a filter effect do?", "options": ["Add vocals", "Change tempo", "Emphasize or remove frequencies", "Control volume"], "correctIndex": 2, "explanation": "Filters shape sound by emphasizing/removing parts." },
+      { "type": "text", "question": "Use filters for build-ups and transitions." },
+      { "type": "mcq", "question": "High-pass filters remove what?", "options": ["Highs", "Mids", "Lows", "All"], "correctIndex": 2, "explanation": "High-pass filters remove bass (lows)." },
+      { "type": "text", "question": "EQ and filters are expressive tools, not just technical." },
+      { "type": "text", "question": "Mastering EQs helps you sound polished and professional." }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Transitions and Mixing",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Transitions make your DJ set flow smoothly." },
+      { "type": "mcq", "question": "Which technique helps create smooth transitions?", "options": ["Echo fade", "Stop and start", "Max volume", "Cut bass"], "correctIndex": 0, "explanation": "Echo fades allow graceful exits." },
+      { "type": "mcq", "question": "What does the crossfader control?", "options": ["Bass", "Deck volume", "Track selection", "Mix between decks"], "correctIndex": 3, "explanation": "It controls the audio blend between two sources." },
+      { "type": "text", "question": "Transition timing depends on phrasing and energy." },
+      { "type": "mcq", "question": "Which of these is a common mix point?", "options": ["Random", "Drop", "Outro", "Phone call"], "correctIndex": 2, "explanation": "Mixing during the outro can be smoother." },
+      { "type": "text", "question": "Try transitioning between tracks with similar BPMs." },
+      { "type": "mcq", "question": "What can happen with poor transition timing?", "options": ["Silence", "Clash", "Both", "Nothing"], "correctIndex": 2, "explanation": "Both silence and clashing can ruin a mix." },
+      { "type": "text", "question": "Practice using filters and EQ during transitions." },
+      { "type": "mcq", "question": "Which filter is used to remove highs?", "options": ["High-pass", "Low-pass", "Band-pass", "Notch"], "correctIndex": 2, "explanation": "Band-pass allows only certain ranges to pass." },
+      { "type": "text", "question": "You’re ready to experiment with creative mixes!" }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Building a Set",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Building a set means choosing songs that flow well." },
+      { "type": "mcq", "question": "Why use harmonic mixing?", "options": ["Louder sound", "Avoid clashes", "Change genre", "All of the above"], "correctIndex": 1, "explanation": "Harmonic mixing maintains musical coherence." },
+      { "type": "text", "question": "Consider energy levels and keys when selecting tracks." },
+      { "type": "mcq", "question": "What’s a good number of tracks for a 30-min set?", "options": ["5", "8-12", "20", "1"], "correctIndex": 1, "explanation": "Enough for variety but not too much." },
+      { "type": "text", "question": "Organize tracks by genre, key, and vibe." },
+      { "type": "mcq", "question": "When should you raise the energy?", "options": ["Randomly", "At the beginning", "Based on crowd", "Never"], "correctIndex": 2, "explanation": "Reacting to the crowd is key." },
+      { "type": "text", "question": "Plan intro, peak and ending of your set." },
+      { "type": "mcq", "question": "Which tool helps you prep a set?", "options": ["DAW", "Crate", "Audio cable", "Headphones"], "correctIndex": 1, "explanation": "Crates help organize tracks for sets." },
+      { "type": "text", "question": "Always prepare a few backup tracks." },
+      { "type": "text", "question": "You’re one step closer to playing a live set!" }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Reading the Crowd",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "A good DJ adapts to the energy of the audience." },
+      { "type": "mcq", "question": "What indicates a good crowd reaction?", "options": ["Bored faces", "Silence", "Dancing and cheering", "Leaving"], "correctIndex": 2, "explanation": "Engaged audience means you're doing well." },
+      { "type": "text", "question": "Pay attention to how the crowd moves and responds." },
+      { "type": "mcq", "question": "What should you do if the energy drops?", "options": ["Ignore it", "Raise BPM or change track", "Turn off music", "Wait it out"], "correctIndex": 1, "explanation": "Adapt quickly to maintain flow." },
+      { "type": "text", "question": "Build sets with flexibility to react live." },
+      { "type": "mcq", "question": "When is a good time to drop a hit?", "options": ["Randomly", "At peak energy", "At intro", "After a mistake"], "correctIndex": 1, "explanation": "Hits amplify high energy moments." },
+      { "type": "text", "question": "Engage with the crowd visually and through music." },
+      { "type": "mcq", "question": "What's a warning sign of poor crowd connection?", "options": ["Smiles", "Silence", "Phones out", "Disengagement"], "correctIndex": 3, "explanation": "Disengagement shows loss of connection." },
+      { "type": "text", "question": "Crowd reading improves with experience and observation." },
+      { "type": "text", "question": "You're ready to keep the floor alive!" }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Recording Your Mix",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Recording helps you improve and share your sets." },
+      { "type": "mcq", "question": "Which device is best to record a set?", "options": ["USB recorder", "Light controller", "Microphone", "Speakers"], "correctIndex": 0, "explanation": "A USB recorder captures clean output." },
+      { "type": "text", "question": "Make sure levels are correct before starting." },
+      { "type": "mcq", "question": "What should you avoid during a recording?", "options": ["Low volume", "Mistakes", "Talking over mix", "Everything"], "correctIndex": 2, "explanation": "Avoiding distractions ensures clean mix." },
+      { "type": "text", "question": "Practice before recording to reduce errors." },
+      { "type": "mcq", "question": "Why is gain staging important?", "options": ["Prevent distortion", "Increase echo", "Change BPM", "Cueing"], "correctIndex": 0, "explanation": "Proper gain levels prevent clipping." },
+      { "type": "text", "question": "Use recording to track progress over time." },
+      { "type": "mcq", "question": "What helps analyze a mix?", "options": ["Friends", "Waveforms", "MIDI", "Mixer brand"], "correctIndex": 1, "explanation": "Visual waveforms reveal transitions and timing." },
+      { "type": "text", "question": "Share mixes to get feedback and grow." },
+      { "type": "text", "question": "Recording is key for your DJ development." }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Performing Live",
+    "totalPages": 10,
+    "pages": [
+      { "type": "text", "question": "Playing live brings everything you’ve learned together." },
+      { "type": "mcq", "question": "What should you do before your set?", "options": ["Drink a lot", "Sleep", "Test gear and prepare", "Party"], "correctIndex": 2, "explanation": "Preparation ensures smooth performance." },
+      { "type": "text", "question": "Know your setup and bring backups (USB, cables)." },
+      { "type": "mcq", "question": "What helps with stage presence?", "options": ["Looking down", "Interacting", "Being still", "Ignoring crowd"], "correctIndex": 1, "explanation": "Engagement boosts energy and presence." },
+      { "type": "text", "question": "Plan your entry and how to start strong." },
+      { "type": "mcq", "question": "What’s a safe way to end a set?", "options": ["Fade out", "Cut power", "Walk off", "Loop endlessly"], "correctIndex": 0, "explanation": "Fade outs are smooth and respectful." },
+      { "type": "text", "question": "Always monitor audio levels and adapt live." },
+      { "type": "mcq", "question": "Why is backup gear important?", "options": ["Just in case", "Impress people", "More lights", "Better look"], "correctIndex": 0, "explanation": "Redundancy prevents disaster." },
+      { "type": "text", "question": "Enjoy the moment — you’ve trained for this." },
+      { "type": "text", "question": "Congratulations! You’re ready for your first gig." }
+    ]
+  }
+]

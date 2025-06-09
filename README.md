@@ -7,7 +7,6 @@
 | :--- | :--- |
 | **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
-
 ---
 
 ## 🎯 What is Beatquest?
@@ -65,7 +64,7 @@ Due to surgery and recovery, a 5-week delay occurred and was openly addressed in
 
 ## 📘 Report
 
-The complete certification report is available in [`Report.md`](./Report.md). It includes:
+The complete certification report is available in [`Report.pdf`](/Documents/Report.pdf). It includes:
 
 - Project context, personas, use cases
 - Technical architecture with diagrams
