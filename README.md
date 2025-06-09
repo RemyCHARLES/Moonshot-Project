@@ -41,14 +41,16 @@ It was developed as part of the **Moonshot certification program** to demonstrat
 
 ```
 ├── backend/              # Crow C++ server
+|   ├── db/               # Database schema and migrations
 │   ├── routes/           # API routes (login, register, lessons, sessions)
 │   └── main.cpp
-├── frontend/             # Flutter mobile app
+├── dj_learning_app/      # Flutter mobile app
 │   ├── lib/              # Dart source code
 │   └── assets/           # UI assets
-├── sql/                  # PostgreSQL migration scripts
-├── docs/                 # Markdown documentation & diagrams
-└── Report.md             # Final Moonshot report
+├── Documents/            # Markdown documentation & diagrams
+|   ├── Report.md         
+│   └── Report.pdf        # Technical architecture overview
+└── Archive/              # Archived files and resources
 ```
 
 ---

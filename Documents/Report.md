@@ -50,11 +50,12 @@ version: "1.0"
 
 7. [Project Management and Execution](#7-project-management-and-execution)
    - 7.1 Project Timeline
-   - 7.2 Workflow and Tools
+   - 7.2 Lessons Learned
    - 7.3 Risk Management and Adjustments
-   - 7.4 Self-Evaluation and Autonomy
+   - 7.4 Acknowledgments
+   - 7.5 Conclusion
 
-# 1. Comprehensive Presentation of the Professional Project
+8. [Glossary](#8-glossary)
 
 ## 1.1 Project Overview
 
