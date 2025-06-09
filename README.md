@@ -7,6 +7,7 @@
 | :--- | :--- |
 | **Rémy Charles** | <img src="https://ca.slack-edge.com/T019N8PRR7W-U0338M4B32R-2e88fca92827-512" width="50px" align=center> |
 
+
 ---
 
 ## 🎯 What is Beatquest?
@@ -78,5 +79,3 @@ The complete certification report is available in [`Report.md`](./Report.md). It
 
 For questions, feedback or ideas:  
 📧 [remy.charles@algosup.com](mailto:remy.charles@algosup.com)
-
----
