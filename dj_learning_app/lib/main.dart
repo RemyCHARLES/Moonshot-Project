@@ -1,3 +1,18 @@
+// lib/main.dart
+// ------------------------------------------------------------
+// Beatquest – Main Entry Point
+// ------------------------------------------------------------
+// This file initializes the Flutter application and configures
+// global theming and routing. It defines the app structure using
+// GoRouter for navigation and AudioSession for audio handling.
+//
+// Features:
+// - Defines all app routes (Welcome, Login, Register, Home, etc.)
+// - Sets up audio session for playback consistency
+// - Applies global themes (light/dark)
+// - Wraps screen navigation in ShellRoute with MainScaffold
+// ------------------------------------------------------------
+
 import 'package:audio_session/audio_session.dart';
 import 'core/theme/app_theme.dart'; // Theme for the app (colors, fonts, etc.)
 import 'package:flutter/material.dart'; // Flutter framework for building UI
@@ -16,22 +31,21 @@ import 'core/navigation/route_observer.dart'; // Global route observer for navig
 
 
 
-// Entry point of the application
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final session = await AudioSession.instance;
-  await session.configure(const AudioSessionConfiguration.music());
+  await session.configure(const AudioSessionConfiguration.music()); // Configure app-wide audio settings
   runApp(const MyApp());
 }
 
 // App routing configuration (navigation between pages)
 final _router = GoRouter(
-  observers: [routeObserver],
+  observers: [routeObserver], // Track route changes globally
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const WelcomeScreen(),
+      builder: (context, state) => const WelcomeScreen(), // Entry screen
     ),
     GoRoute(
       path: '/login',
@@ -42,9 +56,8 @@ final _router = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     ShellRoute(
-      builder: (BuildContext context, GoRouterState state, Widget child) {
-        return MainScaffold(child: child);
-      },
+      builder: (BuildContext context, GoRouterState state, Widget child) =>
+          MainScaffold(child: child), // Wrap main tabs in scaffold
       routes: [
         GoRoute(
           path: '/home',
@@ -72,7 +85,7 @@ final _router = GoRouter(
       path: '/lesson-runner/:lessonId',
       name: 'lesson-runner',
       builder: (context, state) {
-        final lessonId = state.pathParameters['lessonId'] ?? '';
+        final lessonId = state.pathParameters['lessonId'] ?? ''; // Read dynamic lesson ID
         return LessonRunnerScreen(lessonId: lessonId);
       },
     ),
@@ -85,11 +98,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: _router,
+      routerConfig: _router, // Use declarative router
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme, // Light theme configuration
-      darkTheme: AppTheme.darkTheme, // Dark theme configuration
-      themeMode: ThemeMode.light, // Force light theme for now
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light, // Only light mode for now
     );
   }
 }
