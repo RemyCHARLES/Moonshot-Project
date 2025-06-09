@@ -1,3 +1,20 @@
+// lib/presentation/screens/lesson_runner/lesson_runner_sreen.dart
+// ------------------------------------------------------------
+// Beatquest – Lesson Runner Screen
+// ------------------------------------------------------------
+// This widget is responsible for rendering a complete lesson session,
+// page by page. Each page can be a quiz, instructional text, beatmatch,
+// or final recap. It fetches lesson content from the backend API
+// and tracks user answers and progression.
+//
+// Features:
+// - Loads lesson pages dynamically using REST API
+// - Tracks correct/incorrect answers and current step
+// - Handles lesson completion and progress persistence
+// - Displays a recap screen at the end
+//
+// Related widgets: McqPage, TextPage, BeatmatchPage, RecapPage
+// ------------------------------------------------------------
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,12 +55,18 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
   int _incorrectAnswers = 0;
   bool _showNextLessonButton = false;
 
+  // -----------------------------------------
+  // LIFECYCLE: Init screen and fetch first page
+  // -----------------------------------------
   @override
   void initState() {
     super.initState();
     _loadPage();
   }
 
+  // -----------------------------------------
+  // NETWORK: Fetch a lesson page from backend
+  // -----------------------------------------
   Future<void> _loadPage() async {
     setState(() {
       _isLoading = true;
@@ -88,6 +111,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     }
   }
 
+  // -----------------------------------------
+  // UI LOGIC: Handle navigation to next lesson step
+  // -----------------------------------------
   void _nextPage() async {
     if (_currentIndex >= _totalPages - 1) {
       setState(() {
@@ -142,6 +168,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     }
   }
 
+  // -----------------------------------------
+  // RENDER: Build main scaffold and render active lesson page
+  // -----------------------------------------
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -202,6 +231,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     );
   }
 
+  // -----------------------------------------
+  // WIDGET: Render content widget for current page type
+  // -----------------------------------------
   Widget _buildPageContent(LessonPageModel page) {
     switch (page.type) {
       case 'mcq':
@@ -275,6 +307,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     }
   }
 
+  // -----------------------------------------
+  // NETWORK: POST completion to /progress endpoint
+  // -----------------------------------------
   Future<void> _markLessonAsCompleted(int userId) async {
     final url = 'http://localhost:18080/users/$userId/progress';
     final payload = {
@@ -302,6 +337,9 @@ class _LessonRunnerScreenState extends State<LessonRunnerScreen> {
     }
   }
 
+  // -----------------------------------------
+  // AUTH: Extract user ID from JWT token
+  // -----------------------------------------
   Future<int?> _getUserIdFromToken() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'jwt_token');

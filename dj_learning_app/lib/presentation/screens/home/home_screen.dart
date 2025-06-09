@@ -1,3 +1,20 @@
+// lib/presentation/screens/home/home_screen.dart
+// ------------------------------------------------------------
+// Beatquest – Home Screen
+// ------------------------------------------------------------
+// This widget represents the app's main dashboard after login.
+// It displays the user's current level, experience, and unlocked
+// lessons in a vertical progress list.
+//
+// Features:
+// - Fetches the user's progression from a secure backend
+// - Uses routeObserver to refresh when returning to this screen
+// - Displays lesson icons: unlocked (blue/purple) or locked (grey)
+// - Tapping an unlocked lesson navigates to its runner screen
+//
+// Dependencies: HTTP, SecureStorage, GoRouter, RouteObserver
+// ------------------------------------------------------------
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,18 +31,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
-  int lastUnlockedLesson = 1;
+  int lastUnlockedLesson = 1; // Tracks the highest lesson the user can access
 
   @override
   void initState() {
     super.initState();
-    fetchProgression();
+    fetchProgression(); // Load progress on screen load
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
+    routeObserver.subscribe(this, ModalRoute.of(context)!); // Subscribe to navigation changes
   }
 
   @override
@@ -36,35 +53,36 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   void didPopNext() {
-    // Called when returning to this page
+    // Triggered when returning from another screen
     fetchProgression();
   }
 
-final storage = FlutterSecureStorage();
+  final storage = FlutterSecureStorage(); // Used to retrieve secure user ID
 
-void fetchProgression() async {
-  String? userId = await storage.read(key: 'user_id'); // Secure retrieval
+  /// Fetch user progression from backend and update UI
+  void fetchProgression() async {
+    String? userId = await storage.read(key: 'user_id'); // Secure user ID
 
-  if (userId == null) {
-    print('❌ No user ID found in secure storage');
-    return;
-  }
-
-  try {
-    final res = await http.get(Uri.parse('http://localhost:18080/users/$userId/progression'));
-    print('📦 API progression: ${res.body}');
-    if (res.statusCode == 200) {
-      final json = jsonDecode(res.body);
-      final int nextLesson = json['nextLesson'] ?? 1;
-      setState(() {
-        lastUnlockedLesson = nextLesson;
-      });
-      print('🔓 Unlocked lesson: $lastUnlockedLesson');
+    if (userId == null) {
+      print('❌ No user ID found in secure storage');
+      return;
     }
-  } catch (e) {
-    print('❌ Error fetching progression: $e');
+
+    try {
+      final res = await http.get(Uri.parse('http://localhost:18080/users/$userId/progression'));
+      print('📦 API progression: ${res.body}');
+      if (res.statusCode == 200) {
+        final json = jsonDecode(res.body);
+        final int nextLesson = json['nextLesson'] ?? 1;
+        setState(() {
+          lastUnlockedLesson = nextLesson;
+        });
+        print('🔓 Unlocked lesson: $lastUnlockedLesson');
+      }
+    } catch (e) {
+      print('❌ Error fetching progression: $e');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +143,9 @@ void fetchProgression() async {
               itemBuilder: (context, index) {
                 final lessonId = index + 1;
                 final isUnlocked = lessonId <= lastUnlockedLesson;
+                // Render a lesson node as a circle
+                // Color and shadow vary depending on unlock state
+                // Tapping triggers navigation if unlocked
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Container(
@@ -143,7 +164,6 @@ void fetchProgression() async {
                             color: lessonId < lastUnlockedLesson
                                 ? const Color.fromARGB(255, 0, 113, 166)
                                 : const Color.fromARGB(255, 110, 0, 157),
-                                
                             offset: const Offset(0, 4),
                             blurRadius: 0,
                             spreadRadius: 0.3,

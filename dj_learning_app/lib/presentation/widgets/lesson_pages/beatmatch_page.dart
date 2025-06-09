@@ -1,3 +1,21 @@
+// lib/presentation/widgets/lesson_pages/beatmatch_page.dart
+// ------------------------------------------------------------
+// Beatquest – BeatmatchPage Widget
+// ------------------------------------------------------------
+// This widget is used to teach users timing alignment between two
+// audio tracks (Track A and B). It provides playback controls,
+// waveform placeholders, and a jog wheel to shift playback position.
+//
+// The user can play both loops simultaneously and validate whether
+// the alignment is correct (within a tolerance).
+//
+// Features:
+// - JustAudio player setup for both tracks
+// - Visual waveform placeholders
+// - Jog wheel adjustment buttons
+// - Loop playback and sync validation
+// ------------------------------------------------------------
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -12,15 +30,15 @@ class BeatmatchPage extends StatefulWidget {
 }
 
 class _BeatmatchPageState extends State<BeatmatchPage> {
-  late AudioPlayer playerA;
-  late AudioPlayer playerB;
+  late AudioPlayer playerA;  // Player for Track A (reference loop)
+  late AudioPlayer playerB;  // Player for Track B (user-aligned loop)
 
   bool _hasValidated = false;
   bool _isCorrect = false;
   int _offsetMs = 0;
 
-  static int _correctAnswers = 0;
-  static int _incorrectAnswers = 0;
+  static int _correctAnswers = 0;   // Track global correct count
+  static int _incorrectAnswers = 0; // Track global incorrect count
 
   @override
   void initState() {
@@ -28,9 +46,11 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
     playerA = AudioPlayer();
     playerB = AudioPlayer();
 
+    // Ensure both players loop continuously
     playerA.setLoopMode(LoopMode.one);
     playerB.setLoopMode(LoopMode.one);
 
+    // Debug logging on state change
     playerA.playerStateStream.listen((state) {
       print("🎧 playerA → ${state.processingState}, playing: ${state.playing}");
     });
@@ -41,13 +61,12 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
     _loadAudio();
   }
 
+  /// Load audio files and optionally apply an initial offset
   Future<void> _loadAudio() async {
     try {
       final fileA = widget.data['fileA'];
       final fileB = widget.data['fileB'];
       final initialOffset = widget.data['initialOffsetMs'] ?? 0;
-
-      print('🎧 fileA: $fileA, fileB: $fileB');
 
       if (fileA == null || fileB == null) {
         print('❌ Fichier audio manquant');
@@ -57,19 +76,12 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
       final urlA = 'http://localhost:18080/audio-files/$fileA';
       final urlB = 'http://localhost:18080/audio-files/$fileB';
 
-      print('🔗 playerA URL: $urlA');
-      print('🔗 playerB URL: $urlB');
-
       await playerA.setUrl(urlA);
-      print('✅ playerA ready');
-
       final resultB = await playerB.setUrl(urlB);
       if (resultB == null) {
         print('❌ Le chargement de playerB a échoué');
       } else {
-        print('✅ playerB ready with duration: $resultB');
         await playerB.seek(Duration(milliseconds: initialOffset));
-        print('⏩ Seeked playerB to $initialOffset ms');
       }
     } catch (e) {
       print('❌ Erreur chargement audio: $e');
@@ -90,11 +102,14 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // Title
           const Text(
             '🎧 Beatmatch Exercise',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
+
+          // Track A display
           Text('Track A: ${widget.data['fileA']}'),
           const SizedBox(height: 10),
           Container(
@@ -103,7 +118,10 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
             alignment: Alignment.center,
             child: const Text('Player A Waveform'),
           ),
+
           const SizedBox(height: 20),
+
+          // Track B display
           Text('Track B: ${widget.data['fileB']}'),
           const SizedBox(height: 10),
           Container(
@@ -112,12 +130,12 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
             alignment: Alignment.center,
             child: const Text('Player B Waveform'),
           ),
+
           const SizedBox(height: 30),
-          const Text(
-            'Jog Wheel Control',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
+          const Text('Jog Wheel Control', style: TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(height: 10),
+
+          // Jog wheel UI
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -138,7 +156,10 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
               ),
             ],
           ),
+
           const SizedBox(height: 30),
+
+          // Playback button
           ElevatedButton.icon(
             icon: const Icon(Icons.play_arrow),
             label: const Text('Start Looping Playback'),
@@ -146,13 +167,15 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
               try {
                 await Future.wait([playerA.seek(Duration.zero), playerB.seek(Duration.zero)]);
                 await Future.wait([playerA.play(), playerB.play()]);
-                print('▶️ Both players started');
               } catch (e) {
                 print('❌ Error starting playback: $e');
               }
             },
           ),
+
           const SizedBox(height: 20),
+
+          // Validation button
           ElevatedButton.icon(
             icon: const Icon(Icons.check),
             label: const Text('Validate Sync'),
@@ -174,9 +197,12 @@ class _BeatmatchPageState extends State<BeatmatchPage> {
                   _BeatmatchPageState._incorrectAnswers++;
                 }
               });
+
               widget.onValidated?.call(_isCorrect);
             },
           ),
+
+          // Feedback UI
           if (_hasValidated)
             Padding(
               padding: const EdgeInsets.only(top: 12.0),

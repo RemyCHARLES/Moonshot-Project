@@ -1,10 +1,26 @@
+// lib/presentation/widgets/lesson_pages/mcq_page.dart
+// ------------------------------------------------------------
+// Beatquest – MCQ Page Widget
+// ------------------------------------------------------------
+// This widget displays a multiple choice question (MCQ) as part of
+// a lesson page. It allows the user to select one option and submit
+// their answer. Once submitted, feedback is shown with optional
+// explanation text and a "Next" button if provided.
+//
+// Features:
+// - Supports selection of one answer from a list
+// - Validates selection against the correct index
+// - Shows success/failure and explanation
+// - Optional callback to navigate to next page
+// ------------------------------------------------------------
+
 import 'package:flutter/material.dart';
 import 'package:dj_learning_app/core/models/lesson.dart';
 
 class McqPage extends StatefulWidget {
-  final LessonPageModel page;
-  final void Function(bool isCorrect) onValidated;
-  final VoidCallback? onNext;
+  final LessonPageModel page; // The lesson content for this MCQ
+  final void Function(bool isCorrect) onValidated; // Callback triggered after user submits
+  final VoidCallback? onNext; // Optional callback to go to next page
 
   const McqPage({Key? key, required this.page, required this.onValidated, this.onNext}) : super(key: key);
 
@@ -13,8 +29,8 @@ class McqPage extends StatefulWidget {
 }
 
 class _McqPageState extends State<McqPage> {
-  int? _selectedIndex;
-  bool _hasValidated = false;
+  int? _selectedIndex; // Stores the index of selected answer
+  bool _hasValidated = false; // True once user has submitted answer
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +39,7 @@ class _McqPageState extends State<McqPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Display the question
         Padding(
           padding: const EdgeInsets.all(24.0),
           child: Text(
@@ -31,6 +48,8 @@ class _McqPageState extends State<McqPage> {
             textAlign: TextAlign.center,
           ),
         ),
+
+        // Render each option with styling based on selection
         ...?page.options?.asMap().entries.map((entry) {
           final index = entry.key;
           final option = entry.value;
@@ -53,23 +72,25 @@ class _McqPageState extends State<McqPage> {
                     ? null
                     : () {
                         setState(() {
-                          _selectedIndex = index;
+                          _selectedIndex = index; // Update selected option
                         });
                       },
               ),
             ),
           );
         }),
+
+        // Show submit button once an option is selected
         if (_selectedIndex != null && !_hasValidated)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _hasValidated = true;
+                  _hasValidated = true; // Mark as validated
                 });
                 final isCorrect = _selectedIndex == page.correctIndex;
-                widget.onValidated(isCorrect);
+                widget.onValidated(isCorrect); // Send result back
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,
@@ -78,6 +99,8 @@ class _McqPageState extends State<McqPage> {
               child: const Text("Submit"),
             ),
           ),
+
+        // Display feedback after submission
         if (_hasValidated)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -100,6 +123,8 @@ class _McqPageState extends State<McqPage> {
               ],
             ),
           ),
+
+        // Show next button if onNext is provided
         if (_hasValidated && widget.onNext != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
