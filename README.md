@@ -64,7 +64,7 @@ Due to surgery and recovery, a 5-week delay occurred and was openly addressed in
 
 ## 📘 Report
 
-The complete certification report is available in [`Report.md`](./Report.md). It includes:
+The complete certification report is available in [`Report.pdf`](/Documents/Report.pdf). It includes:
 
 - Project context, personas, use cases
 - Technical architecture with diagrams
@@ -78,5 +78,3 @@ The complete certification report is available in [`Report.md`](./Report.md). It
 
 For questions, feedback or ideas:  
 📧 [remy.charles@algosup.com](mailto:remy.charles@algosup.com)
-
----
